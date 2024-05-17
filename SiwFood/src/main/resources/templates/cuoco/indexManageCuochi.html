@@ -22,7 +22,7 @@
 
     <div class="top">
    <div class="text">
-      <h2>Benvenuto Nome</h2>
+      <h2 th:text="'Benvenuto Chef + ' '+ ${user.nome}+' ' +${user.cognome}" ></h2>
          <p>descrizione.</p>
            <p>desc2.</p>       
      </div>
@@ -35,8 +35,8 @@
       <img src="/images/ricetteManage.jpg" alt="Lavoro 1">
       <div class="card-content">
         <h3>Ricette</h3>
-          <a th:href="@{'/ricette'}"
-           th:text="Ricette">Up! (2000)</a>
+          <a th:href="@{'/cuoco/addricetteCuochi'}"
+           th:text="Modifica le tue Ricette">Up! (2000)</a>
       </li>
       </div>
     </div>

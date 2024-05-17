@@ -13,10 +13,6 @@ body {
   
 }
 
-.logo {
-  font-size: 1.5em;
-  font-weight: 900;
-}
 
 .nav ul {
   list-style: none;
@@ -106,7 +102,8 @@ body {
   position: relative;
   z-index: 1;
 }
-
+.img-res{width: 100%;height: auto; margin-bottom: 20px; vertical-align: middle;}
+.img-round{border-radius: 100%;}
 
 
 .description {

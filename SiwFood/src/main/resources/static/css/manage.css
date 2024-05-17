@@ -1,0 +1,140 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #eaf6f8;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/*HEADER*/
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  background-color: azure;
+  
+}
+
+
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.nav ul li {
+  margin: 0;
+   padding: 10px 10px;
+}
+
+.nav ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.cta .button {
+  background-color: #ff4b5c;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 700;
+}
+/**/
+
+
+.top {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.text {
+    align-items: center;
+    padding: 10px;
+}
+
+.text h2 {
+align-items: center;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.text p {
+    font-size: 1em;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-x: auto; /* Permette lo scorrimento orizzontale */
+}
+
+.card {
+  position: relative;
+  flex: 0 0 300px; /* Larghezza fissa di 300px */
+  max-width: 300px;
+  
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+.card-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  
+}
+
+.card-content h3, .card-content p {
+  margin: 0;
+}
+
+.card-content h3 {
+  font-size: 3em;
+  font-weight: bold;
+}
+
+
+
+/* Media query per dispositivi più piccoli */
+@media (max-width: 600px) {
+  .card {
+    flex: 0 0 250px; /* Riduce la larghezza della card */
+    max-width: 250px;
+  }
+
+  .card-content h3 {
+    font-size: 1.2em; /* Riduce la dimensione del testo */
+  }
+
+  .card-content p {
+    font-size: 0.9em; /* Riduce la dimensione del testo */
+  }
+}

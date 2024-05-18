@@ -1,16 +1,20 @@
 package it.uniroma3.siw.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import it.uniroma3.siw.model.User;
-import it.uniroma3.siw.repository.UserRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.Ricette;
+import it.uniroma3.siw.model.User;
+import it.uniroma3.siw.repository.CredentialsRepository;
+import it.uniroma3.siw.repository.UserRepository;
 
 /**
  * The UserService handles logic for Users.
@@ -20,6 +24,11 @@ public class UserService {
 
     @Autowired
     protected UserRepository userRepository;
+    @Autowired
+    private CredentialsRepository credentialsRepository;
+
+    
+   
 
     /**
      * This method retrieves a User from the DB based on its ID.
@@ -43,6 +52,8 @@ public class UserService {
     public User saveUser(User user) {
         return this.userRepository.save(user);
     }
+    
+    
 
     /**
      * This method retrieves all Users from the DB.
@@ -56,4 +67,10 @@ public class UserService {
             result.add(user);
         return result;
     }
+
+	public Optional<User> getUserByCredentials(UserDetails userDetails) {
+		String username = userDetails.getUsername();
+        return credentialsRepository.findByUsername(username).map(Credentials::getUser);
+    }
+
 }

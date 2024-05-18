@@ -1,9 +1,18 @@
 package it.uniroma3.siw.model;
 
+import java.time.LocalDate;
+import java.util.Set;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -20,8 +29,44 @@ public class User {
 	private String surname;
 	@NotBlank
 	private String email;
+	
+	
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Credentials credentials;
 
-    public Long getId() {
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dataNascita;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Ricette> ricette;
+	
+	
+
+	public Credentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
+	}
+
+	public LocalDate getDataNascita() {
+		return dataNascita;
+	}
+
+	public void setDataNascita(LocalDate dataNascita) {
+		this.dataNascita = dataNascita;
+	}
+    public Set<Ricette> getRicette() {
+		return ricette;
+	}
+
+	public void setRicette(Set<Ricette> ricette) {
+		this.ricette = ricette;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
@@ -88,4 +133,6 @@ public class User {
 			return false;
 		return true;
 	}
+
+
 }

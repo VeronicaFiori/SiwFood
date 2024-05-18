@@ -1,0 +1,65 @@
+body {
+  margin: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  background-color: azure;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  background-color: azure;
+  
+}
+
+
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.nav ul li {
+  margin: 0;
+   padding: 10px 10px;
+}
+
+.nav ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.cta .button {
+  background-color: #ff4b5c;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+
+
+.description {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+
+
+.description .button {
+  background-color: #ff4b5c;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 700;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+
+

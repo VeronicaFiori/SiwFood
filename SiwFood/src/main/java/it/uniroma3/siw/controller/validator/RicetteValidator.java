@@ -16,8 +16,7 @@ import it.uniroma3.siw.repository.RicetteRepository;
 //	@Override
 //	public void validate(Object o, Errors errors) {
 //		Ricette ricette = (Ricette)o;
-//		if (ricette.getNome()!=null && ricette.getYear()!=null 
-//				&& ricetteRepository.existsByTitleAndYear(movie.getTitle(), movie.getYear())) {
+//		if (ricette.getNome()!=null) {
 //			errors.reject("ricette.duplicate");
 //		}
 //	}
@@ -25,4 +24,7 @@ import it.uniroma3.siw.repository.RicetteRepository;
 //	public boolean supports(Class<?> aClass) {
 //		return Ricette.class.equals(aClass);
 //	}
+//
+//	
+//
 //}

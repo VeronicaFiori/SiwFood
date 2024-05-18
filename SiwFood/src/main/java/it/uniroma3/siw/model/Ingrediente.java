@@ -6,7 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Ingrediente {
@@ -17,7 +19,18 @@ public class Ingrediente {
 
 	@NotBlank
 	private String nome;
+	@NotNull
     private int quantita;
+    
+    @ManyToOne
+    private Ricette ricetta;
+    
+	public Ricette getRicetta() {
+		return ricetta;
+	}
+	public void setRicetta(Ricette ricetta) {
+		this.ricetta = ricetta;
+	}
 	public Long getId() {
 		return id;
 	}

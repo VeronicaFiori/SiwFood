@@ -23,6 +23,14 @@ public class IngredienteService {
 		ingredienteRepository.save(ingrediente);
 		
 	}
+	
+	public void deleteIngrediente(Long id) {
+        ingredienteRepository.deleteById(id);
+    }
+
+    public Ingrediente getIngrediente(Long id) {
+        return ingredienteRepository.findById(id).orElse(null);
+    }
 
 }
 

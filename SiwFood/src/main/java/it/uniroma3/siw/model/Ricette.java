@@ -1,14 +1,16 @@
 package it.uniroma3.siw.model;
 
 import java.util.Objects;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Ricette {
@@ -20,10 +22,30 @@ public class Ricette {
 
 	@NotBlank
 	private String nome;
-//	private String ingredienti;
-//	private Images -images;
+	@NotBlank
     private String descrizione;
-    private String chef;
+	
+	@ManyToOne
+    private User user;
+	
+	
+	@OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL)
+    private Set<Ingrediente> ingredienti;
+	
+	
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public Set<Ingrediente> getIngredienti() {
+		return ingredienti;
+	}
+	public void setIngredienti(Set<Ingrediente> ingredienti) {
+		this.ingredienti = ingredienti;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -44,15 +66,10 @@ public class Ricette {
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
-	public String getChef() {
-		return chef;
-	}
-	public void setChef(String chef) {
-		this.chef = chef;
-	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(chef, descrizione, id, nome);
+		return Objects.hash( descrizione, id, nome);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -63,7 +80,7 @@ public class Ricette {
 		if (getClass() != obj.getClass())
 			return false;
 		Ricette other = (Ricette) obj;
-		return Objects.equals(chef, other.chef) && Objects.equals(descrizione, other.descrizione)
+		return Objects.equals(descrizione, other.descrizione)
 				&& Objects.equals(nome, other.nome);
 	}
 	

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Modifica Ricetta</title>
+    <link rel="stylesheet" href="/css/cuoco/ricetteCuoco.css" />
+</head>
+<body>
+    <h1>Modifica Ricetta</h1>
+
+    <form th:action="@{'/cuoco/ricettaCuoco/modifica/' + ${ricetta.id}}" th:object="${ricetta}" method="post">
+           <div>
+			    <label>Nome:</label>
+			    <span><input type="text" th:field="${ricetta.nome}"  required /></span>
+			    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">  </span>
+		    </div>
+           <div>
+			    <label>Descrizione:</label>
+			    <span><textarea type="text" th:field="${ricetta.descrizione}"  required /></textarea>
+			    <span th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}">  </span>
+		    </div>
+
+      <h2>Ingredienti</h2>
+     
+      <!--se è vuota aggiungo nuovi ingredienti-->
+ <!--      <div th:if="${ingrediente==null || ingrediente.isEmpty()}">
+		     <div>
+			  <h1>Aggiungi un nuovo ingrediente</h1>
+	            <form th:action="@{'/cuoco/ricettaCuoco'}" method="POST" th:object="${ingrediente}">
+		          <div th:if="${#fields.hasGlobalErrors()}">
+  			        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
+  		          </div>
+		          <div>
+			        <label>Nome:</label>
+			          <span><input type="text" th:field="${ingrediente.nome}"  required /></span>
+			          <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">  </span>
+		           </div>
+                   <div>
+			        <label>Quantita':</label>
+			          <span><input type="text" th:field="${ingrediente.quantita}"  required /></span>
+			          <span th:if="${#fields.hasErrors('quantita')}" th:errors="*{quantita}">  </span>
+		           </div>
+                   <div>
+				     <span><button type="submit">Aggiungi</button></span>
+			       </div>
+		         </div>
+		 </div>
+    
+    <!--altrimenti posso modificare-->
+  <!---     <div th:unless="${ingrediente==null || ingrediente.isEmpty()}">
+
+        <div th:each="ingrediente, stat : *{ingredienti}">
+            <div>
+                <label>Nome:</label>
+                <span><input type="text" th:field="*{ingredienti[__${stat.index}__].nome}" required /></span>
+                <span th:if="${#fields.hasErrors('ingredienti[__${stat.index}__].nome')}" th:errors="*{ingredienti[__${stat.index}__].nome}">  </span>
+            </div>
+            <div>
+                <label>Quantita:</label>
+                <span><input type="text" th:field="*{ingredienti[__${stat.index}__].quantita}" required /></span>
+                <span th:if="${#fields.hasErrors('ingredienti[__${stat.index}__].quantita')}" th:errors="*{ingredienti[__${stat.index}__].quantita}">  </span>
+            </div>
+        </div>
+        </div>
+   -->
+
+        <div>
+            <button type="submit">Salva Modifiche</button>
+        </div>
+    </form>
+</body>
+</html>

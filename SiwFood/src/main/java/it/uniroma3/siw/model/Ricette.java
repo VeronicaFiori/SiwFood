@@ -84,7 +84,6 @@ public class Ricette {
 				&& Objects.equals(nome, other.nome);
 	}
 	
-	
 
 
 	

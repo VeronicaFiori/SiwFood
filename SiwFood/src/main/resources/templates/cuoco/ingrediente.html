@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ricetta</title>
+    <link rel="stylesheet" href="/css/cuoco/ricetteCuoco.css" />
+</head>
+
+<body>
+   
+    
+    <h1> Ingrediente </h1>
+    <div th:if="${ingrediente}">
+        <span th:text="${ingrediente.nome}">2000</span>
+    </div>
+    <div th:unless="${ingrediente}">Non ci sono Ingredienti</div>
+    
+
+</body>
+</html>

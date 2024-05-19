@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ricetta</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+    <link rel="stylesheet" href="/css/cuoco/ricetteCuoco.css" />
 </head>
 
 <body>
-	
+    <!-- Visualizza il messaggio di errore se presente -->
+    <div th:if="${error}" style="color: red;">
+        <p th:text="${error}"></p>
+    </div>
+    
     <h1 th:text="${ricetta.nome}"> </h1>
     <div th:if="${ricetta}">
         <span th:text="${ricetta.descrizione}">2000</span>
     </div>
     <div th:unless="${ricetta}">Non ci sono ricette</div>
     
-     <h2>Ingredienti</h2> 
-     <div th:if="${ingredienti}">
-       <ul>
-        <li th:each="ingrediente : ${ricetta.ingredienti}">
-            <span th:text="${ingrediente.name}"> Nome</span> - 
-            <span th:text="${ingrediente.quantita}">Quantita'</span>
-            <a th:href="@{/recipes/{recipeId}/ingredient/delete/{ingredientId}(recipeId=${recipe.id}, ingredientId=${ingredient.id})}">Delete</a>
-        </li>
-    </ul>
-    <a th:href="@{/recipes/{recipeId}/ingredient/add(recipeId=${recipe.id})}">Add Ingredient</a>
+    <h2>Ingredienti</h2> 
+    <div th:if="${ricetta.ingredienti}">
+        <ul>
+            <li th:each="ingrediente : ${ricetta.ingredienti}">
+                <span th:text="${ingrediente.name}"> Nome</span> - 
+                <span th:text="${ingrediente.quantita}">Quantita'</span>
+            </li>
+        </ul>
     </div>
-    <div th:unless="${ingredienti}">Non ci sono ingredienti</div>
-  </body>
+    <div th:unless="${ricetta.ingredienti}">Non ci sono ingredienti</div>
+    
+    <div class="description">
+        <a th:if="${currentUsername == ricetta.user.credentials.username}" 
+           th:href="@{'/cuoco/ricettaCuoco/modifica/' + ${ricetta.id}}" 
+           class="button">Modifica</a>
+    </div>
+</body>
 </html>

@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Ingrediente {
@@ -18,9 +17,10 @@ public class Ingrediente {
 	private Long id;
 
 	@NotBlank
+	
 	private String nome;
-	@NotNull
-    private int quantita;
+	
+    private String quantita;
     
     @ManyToOne
     private Ricette ricetta;
@@ -43,10 +43,10 @@ public class Ingrediente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int getQuantita() {
+	public String getQuantita() {
 		return quantita;
 	}
-	public void setQuantita(int quantita) {
+	public void setQuantita(String quantita) {
 		this.quantita = quantita;
 	}
 	@Override

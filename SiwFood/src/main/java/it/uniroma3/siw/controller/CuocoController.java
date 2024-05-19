@@ -50,6 +50,8 @@ public class CuocoController {
 //			model.addAttribute("messaggioErrore", "Questo artista esiste già");
 //			return "admin/formNewArtist.html"; 
 //		}
+	
+	
 }
 
 	

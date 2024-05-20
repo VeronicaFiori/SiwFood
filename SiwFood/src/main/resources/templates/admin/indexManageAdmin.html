@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/manage.css">
+    <title>Homepage</title>
+</head>
+<body>
+	 <header class="header">
+    <nav class="nav">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Ricette</a></li>
+          <li><a href="#">Cuochi</a></li>
+      
+      </ul>
+    </nav>
+    <div class="cta">
+      <a href="login" class="button">Login</a>
+    </div>
+  </header>
+
+    <div class="top">
+   <div class="text">
+      <h2 >Benvenuto Chef</h2>
+         <p>descrizione.</p>
+           <p>desc2.</p>       
+     </div>
+    
+   </div>
+   
+
+  <div class="container">
+    <div class="card">
+      <img src="/images/ricetteManage.jpg" alt="Lavoro 1">
+      <div class="card-content">
+        <h3>Ricette</h3>
+          <a th:href="@{'/cuoco/ricetteCuoco'}"
+           th:text="'Modifica le tue Ricette'">Up! (2000)</a>
+      </li>
+      </div>
+    </div>
+    <div class="card">
+      <img src="/images/ricetteManage.jpg" alt="Lavoro 1">
+      <div class="card-content">
+        <h3>Ingredienti</h3>
+          <a th:href="@{'/cuoco/ingredienti'}"
+           th:text="'Modifica gli ingredienti'">Up! (2000)</a>
+      </li>
+      </div>
+    </div>
+    <div class="card">
+      <img src="/images/chef2.jpg" alt="Lavoro 1">
+      <div class="card-content">
+        <h3>Cuochi</h3>
+       <a th:href="@{'/cuochi'}"
+           th:text="Modifica i cuochi">Up! (2000)</a>
+      </div>
+    </div>
+    
+    </div>
+  </div>
+</body>
+</html>
+
+

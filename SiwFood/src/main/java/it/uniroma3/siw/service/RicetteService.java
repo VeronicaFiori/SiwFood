@@ -1,9 +1,10 @@
 package it.uniroma3.siw.service;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Ricette;
-import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.RicetteRepository;
 
 
@@ -45,5 +46,10 @@ public class RicetteService {
 	public Ricette getRicetta(Long id) {
 		return ricetteRepository.findById(id).orElse(null);
 	}
+	
+	// Metodo per ottenere le ricette create da un cuoco con un determinato ID
+    public List<Ricette> getRicetteByCuocoId(Long cuocoId) {
+        return ricetteRepository.findByUserId(cuocoId); 
+    }
 
 }

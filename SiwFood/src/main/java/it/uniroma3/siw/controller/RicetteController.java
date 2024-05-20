@@ -1,6 +1,8 @@
 package it.uniroma3.siw.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.siw.model.Ingrediente;
@@ -19,6 +22,7 @@ import it.uniroma3.siw.model.Ricette;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.IngredienteRepository;
 import it.uniroma3.siw.repository.RicetteRepository;
+import it.uniroma3.siw.repository.UserRepository;
 import it.uniroma3.siw.service.IngredienteService;
 import it.uniroma3.siw.service.RicetteService;
 import it.uniroma3.siw.service.UserService;
@@ -37,7 +41,8 @@ public class RicetteController {
 	private IngredienteService ingredienteService;
 	@Autowired
 	private IngredienteRepository ingredienteRepository;
-
+	@Autowired
+	private UserRepository userRepository;
 	//	@Autowired 
 	//	private RicetteValidator ricetteValidator;
 
@@ -56,10 +61,13 @@ public class RicetteController {
 
 	}
 
+
 	@GetMapping("/ricetta/{id}")
 	public String getRicetta(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("ricetta", this.ricetteRepository.findById(id).get());
-		return "ricetta.html";
+	    Ricette ricetta = ricetteRepository.findById(id).get();
+
+	    model.addAttribute("ricetta", ricetta);
+	    return "ricetta.html";
 	}
 
 	
@@ -79,16 +87,30 @@ public class RicetteController {
 		return "/cuoco/ricetteCuoco.html";
 	}
 	
-    /*VISUALIZZAZIONE PAGINA RICETTA CON UN CERTO ID */
-	@GetMapping("/cuoco/ricettaCuoco/{id}")
-	public String getRicettaCuoco(@PathVariable("id") Long id, Model model) {
-		Ricette ricetta = ricetteService.findById(id);
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    String currentUsername = userDetails.getUsername();
-		model.addAttribute("ricetta", this.ricetteRepository.findById(id).get());
-	    model.addAttribute("currentUsername", currentUsername);
-		return "/cuoco/ricettaCuoco.html";
-	}
+//    /*VISUALIZZAZIONE PAGINA RICETTA CON UN CERTO ID */
+//	@GetMapping("/cuoco/ricettaCuoco/{id}")
+//	public String getRicettaCuoco(@PathVariable("id") Long id, Model model) {
+//		Ricette ricetta = ricetteService.findById(id);
+//		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//	    String currentUsername = userDetails.getUsername();
+//		model.addAttribute("ricetta", this.ricetteRepository.findById(id).get());
+//	    model.addAttribute("currentUsername", currentUsername);
+//		return "/cuoco/ricettaCuoco.html";
+//	}
+//	
+	   /*VISUALIZZAZIONE PAGINA RICETTA CON UN CERTO ID */
+		@GetMapping("/cuoco/ricettaCuoco/{id}")
+		public String getRicettaCuoco(@PathVariable("id") Long id, Model model) {
+			Ricette ricetta = ricetteService.findById(id);
+			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		    String currentUsername = userDetails.getUsername();
+			//model.addAttribute("ricetta", this.ricetteRepository.findById(id).get());
+		    List<Ingrediente> ingredienti = ingredienteService.getIngredientiByRicetta(ricetta); // Supponendo che ci sia un metodo per ottenere gli ingredienti di una ricetta dal servizio IngredienteService
+		    model.addAttribute("ricetta", ricetta);
+		    model.addAttribute("ingredienti", ingredienti);
+		    model.addAttribute("currentUsername", currentUsername);
+			return "/cuoco/ricettaCuoco.html";
+		}
 	
 
     /*UN USER PUO ELIMINARE LA PROPRIA RICETTA */
@@ -118,36 +140,79 @@ public class RicetteController {
 //	}
 
 	/*TUTTI GLI USER POSSONO AGGIUNGERE NUOVE RICETTE */
-	@GetMapping("/cuoco/addRicetteCuochi")
-	public String showAddRicetta(Model model) {
-		model.addAttribute("ricetta", new Ricette());
-		return "/cuoco/addRicetteCuochi.html";
-	}
+/*	QUESTA MOD*/	
+//	@GetMapping("/cuoco/addRicetteCuochi")
+//	public String showAddRicetta(Model model) {
+//		model.addAttribute("ricetta", new Ricette());
+//		return "/cuoco/addRicetteCuochi.html";
+//	}
+	
+/*************************************/
+	
+	    @GetMapping("/cuoco/addRicetteCuochi")
+	    public String showAddRicettaForm(Model model) {
+	        model.addAttribute("ricetta", new Ricette());
+	        model.addAttribute("ingredienti", ingredienteService.findAll());
+	        return "/cuoco/addRicetteCuochi.html";
+	    }
+
+	    @PostMapping("/cuoco/ricettaCuoco")
+	    public String addRicetta(@Valid @ModelAttribute Ricette ricetta, BindingResult bindingResult, 
+	                             @RequestParam("ingredientiIds") List<Long> ingredientiIds, 
+	                             @RequestParam Map<String, String> requestParams, 
+	                             RedirectAttributes redirectAttributes) {
+	        if (bindingResult.hasErrors()) {
+	            return "cuoco/addRicetteCuochi.html";
+	        }
+
+	        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	        User currentUser = userService.getUserByCredentials(userDetails).orElseThrow(() -> new RuntimeException("User not found"));
+	        ricetta.setUser(currentUser);
+
+	        List<Ingrediente> ingredientiSelezionati = new ArrayList<>();
+	        for (Long ingredienteId : ingredientiIds) {
+	            Ingrediente ingrediente = ingredienteService.getIngrediente(ingredienteId);
+	            String quantita = requestParams.get("quantita_" + ingredienteId);
+	            ingrediente.setQuantita(quantita);  // Assumi che Ingrediente abbia un campo 'quantita'
+	            ingredientiSelezionati.add(ingrediente);
+	        }
+
+	        ricetta.setIngredienti(ingredientiSelezionati);
+	        ricetteService.save(ricetta);
+	        
+	        
+	        redirectAttributes.addFlashAttribute("success", "Ricetta aggiunta con successo!");
+
+	        return "redirect:/cuoco/ricetteCuoco";
+	    }
 	
 
+	
+	
+/***************************************/
     
 	/*AGGIUNGI RICETTA*/
-	@PostMapping("/cuoco/ricettaCuoco")
-	public String addRicetta(@Valid @ModelAttribute("ricetta") Ricette ricetta, BindingResult bindingResult, Model model) {
-		//			this.ricetteValidator.validate(ricette, bindingResult);
-		if (!bindingResult.hasErrors()) {
-			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			// Ottieni l'utente dal servizio UserService
-	        User user = userService.getUserByCredentials(userDetails).orElseThrow(() -> new RuntimeException("User not found"));
-			ricetta.setUser(user);
-
-			this.ricetteRepository.save(ricetta); 
-			model.addAttribute("ricetta", ricetta);
-	      //  model.addAttribute("ingrediente", ingredienteRepository.findAll()); //ricetta.getIngredienti());
-
-
-			return "cuoco/ricettaCuoco.html";
-		} else {
-			model.addAttribute("messaggioErrore", "Questa ricetta esiste già");
-
-			return "cuoco/addRicetteCuochi.html"; 
-		}
-	}
+//	@PostMapping("/cuoco/ricettaCuoco")
+//	public String addRicetta(@Valid @ModelAttribute("ricetta") Ricette ricetta, BindingResult bindingResult, Model model) {
+//		//			this.ricetteValidator.validate(ricette, bindingResult);
+//		if (!bindingResult.hasErrors()) {
+//			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//			// Ottieni l'utente dal servizio UserService
+//	        User user = userService.getUserByCredentials(userDetails).orElseThrow(() -> new RuntimeException("User not found"));
+//			ricetta.setUser(user);
+//
+//			this.ricetteRepository.save(ricetta); 
+//			model.addAttribute("ricetta", ricetta);
+//	      //  model.addAttribute("ingrediente", ingredienteRepository.findAll()); //ricetta.getIngredienti());
+//
+//
+//			return "cuoco/ricettaCuoco.html";
+//		} else {
+//			model.addAttribute("messaggioErrore", "Questa ricetta esiste già");
+//
+//			return "cuoco/addRicetteCuochi.html"; 
+//		}
+//	}
 	
 
 	
@@ -212,9 +277,9 @@ public class RicetteController {
 	    
 	    ricetta.setNome(aggRicetta.getNome());
 	    ricetta.setDescrizione(aggRicetta.getDescrizione());
-	    ricetta.setIngredienti(aggRicetta.getIngredienti());  
-	    ricetta.getIngredienti().clear();
-	    ricetta.getIngredienti().addAll(aggRicetta.getIngredienti());
+	  //  ricetta.setIngredienti(aggRicetta.getIngredienti());  
+	  //  ricetta.getIngredienti().clear();
+	  //  ricetta.getIngredienti().addAll(aggRicetta.getIngredienti());
 	    
 	    ricetteService.save(ricetta);
 	    return "redirect:/cuoco/ricetteCuoco";
@@ -252,8 +317,20 @@ public class RicetteController {
 	
 	
 	
-	
-	
+	/*******************ADMIN***********/
+
+	@GetMapping(value="/cuoco/manageAdmin")
+	public String indexRicetteAdmin() {
+		return "cuoco/indexManageAdmin.html";
+	}
+
+    /*VISUALIZZAZIONE DI TUTTE LE RICETTE*/
+	@GetMapping("/cuoco/ricetteAdmin")
+	public String getRicetteAdmin(Model model) {		
+		model.addAttribute("ricette", this.ricetteRepository.findAll());
+      
+		return "/cuoco/ricetteAdmin.html";
+	}
 	
 	
 	

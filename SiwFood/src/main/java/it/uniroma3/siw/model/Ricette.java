@@ -1,5 +1,6 @@
 package it.uniroma3.siw.model;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public class Ricette {
 	
 	
 	@OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL)
-    private Set<Ingrediente> ingredienti;
+    private List<Ingrediente> ingredienti;
 	
 	
 	
@@ -40,10 +41,10 @@ public class Ricette {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public Set<Ingrediente> getIngredienti() {
+	public List<Ingrediente> getIngredienti() {
 		return ingredienti;
 	}
-	public void setIngredienti(Set<Ingrediente> ingredienti) {
+	public void setIngredienti(List<Ingrediente> ingredienti) {
 		this.ingredienti = ingredienti;
 	}
 	public Long getId() {

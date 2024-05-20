@@ -20,17 +20,30 @@
     </div>
     <div th:unless="${ricetta}">Non ci sono ricette</div>
     
-    <h2>Ingredienti</h2> 
+<!--    <h2>Ingredienti</h2> 
     <div th:if="${ricetta.ingredienti}">
         <ul>
-            <li th:each="ingrediente : ${ricetta.ingredienti}">
-                <span th:text="${ingrediente.name}"> Nome</span> - 
+            <li th:each="ingrediente : ${ingredienti}">
+                <span th:text="${ingrediente.nome}"> Nome</span>  
                 <span th:text="${ingrediente.quantita}">Quantita'</span>
             </li>
         </ul>
     </div>
     <div th:unless="${ricetta.ingredienti}">Non ci sono ingredienti</div>
-    
+-->
+<h2>Ingredienti</h2>
+<div th:if="${ingredienti==null}">Non ci sono ingredienti</div>
+	<div th:unless="${ingredienti==null}">
+		<div>ciao</div>
+    <ul>
+        <li th:each="ingrediente : ${ingredienti}">
+            <span th:text="${ingrediente.nome}">Nome</span>
+            <span th:text="${ingrediente.quantita}">Quantita'</span>
+        </li>
+    </ul>
+</div>
+
+
     <div class="description">
         <a th:if="${currentUsername == ricetta.user.credentials.username}" 
            th:href="@{'/cuoco/ricettaCuoco/modifica/' + ${ricetta.id}}" 

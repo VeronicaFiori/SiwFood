@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Ricetta</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Ricetta</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -17,5 +20,15 @@
         <span th:text="${ingredienti.nome} + ' '+ ${ingredienti.quantita}">2000</span>
     </div>
     <div th:unless="${ingredienti}">Non ci sono ingredienti</div>
+  
+    <div th:if="${ricetta.user != null}">
+        Creato da: 
+			<a th:href="@{'/cuoco' + '/' + ${ricetta.user.id}}"
+				th:text="${ricetta.user.name}+' '+${ricetta.user.surname} "></a>
+   
+    </div>
+    <div th:if="${ricetta.user == null}">
+        Creatore sconosciuto
+    </div>
   </body>
 </html>

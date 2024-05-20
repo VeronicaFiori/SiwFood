@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Cuoco</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Cuoco</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
 	
-    <h1 th:text="${cuoco.nome}+ ' '+ ${cuoco.cognome}"> </h1>
-        <span th:text="${ricetta.descrizione}">2000</span>
+    <h1 th:text="${cuoco.name}+' '+${cuoco.surname}"> </h1>
+    <div th:if="${cuoco}">
+        <span th:text="${cuoco.email}"></span>
     </div>
-    <div th:unless="${ricetta}">Non ci sono ricette</div>
-     <h2>Ingredienti</h2> 
-     <div th:if="${ingredienti}">
-        <span th:text="${ingredienti.nome} + ' '+ ${ingredienti.quantita}">2000</span>
-    </div>
-    <div th:unless="${ingredienti}">Non ci sono ingredienti</div>
+    <div th:unless="${cuoco}">Non ci sono dati di questo cuoco</div>
+     <h2>Le sue ricette:</h2> 
+     <div th:if="${ricette == null or #lists.isEmpty(ricette) }">Non ci sono ricette associate a questo cuoco</div>
+    <div th:if="${ricette != null }">
+     
+       <ul>
+            <li th:each="ricetta : ${ricette}">
+				<a th:href="@{'/ricetta' + '/' + ${ricetta.id}}"
+				th:text="${ricetta.nome} "></a>
+                
+            </li>
+        </ul>
+      </div>
   </body>
 </html>

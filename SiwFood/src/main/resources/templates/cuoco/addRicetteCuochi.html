@@ -36,16 +36,53 @@
 		    </div> -->
             <div>
 			    <label>Descrizione:</label>
-			    <span><textarea type="text" th:field="${ricetta.descrizione}"  required /></span>
+			    <span><textarea type="text" th:field="${ricetta.descrizione}"  required /></span> </span>
 			    <span th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}">  </span>
 		    </div>
+			
+			
+			
+			<h2>Aggiungi Ingrediente alla Ricetta</h2>
+    <!--         <form th:action="@{/cuoco/ricettaCuoco}" method="post">
+              <div>
+                <label>Ingrediente:</label>
+                  <select name="ingredienteId">
+                  <option th:each="ingrediente : ${ingredienti}" th:value="${ingrediente.nome}" th:text="${ingrediente.nome}">Nome Ingrediente</option>
+                  </select>
+        </div>
+        <div>
+            <label>Quantità:</label>
+            <input type="text" name="quantita" required />
+        </div>
+        <div>
+            <button type="submit">Aggiungi Ingrediente</button>
+        </div>
+    </form>
+			
+			
+			
+			
 			
 			<div>
 				<span><button type="submit">Aggiungi</button></span>
 				
 			</div>
 	</form>
-	
+-->
+
+
+   <div th:each="ingrediente : ${ingredienti}">
+            <label>
+                <input type="checkbox" name="ingredientiIds" th:value="${ingrediente.id}" />
+                <span th:text="${ingrediente.nome}">Nome Ingrediente</span>
+            </label>
+            <input type="text" name="quantita_[[${ingrediente.id}]]" placeholder="Quantità" />
+        </div>
+
+        <div>
+            <button type="submit">Aggiungi Ricetta</button>
+        </div>
+    </form>
 </body>
 
 </html>

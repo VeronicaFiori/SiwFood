@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Cuochi-User</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!--<div id="flex-container">
+    <div class="col-container">
+      <div class="col">
+        <img src="https://i.pinimg.com/originals/dc/41/93/dc4193eafa7d63600d5369abb69d08fa.jpg" alt="Lavoro 1">
+        <h3>Lavoro 1<br>Mario Rossi</h3>
+      </div>
+    </div>-->
+
+
+	
+	<h1>Cuochi</h1>
+	<div th:if="${cuochi == null }">Non ci sono Cuochi nel sistema</div>
+    <div th:if="${cuochi != null}">
+	<ul>
+		<li th:each="cuoco : ${cuochi}">
+			<a th:href="@{'/cuoco' + '/' + ${cuoco.id}}"
+				th:text="${cuoco.name}+' '+${cuoco.surname} "></a>
+		</li>
+	</ul>
+	</div>
+</body>
+
+</html>
+    
+  </div>
+</body>
+</html>

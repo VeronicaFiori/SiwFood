@@ -9,10 +9,8 @@
 </head>
 
 <body>
-    <!-- Visualizza il messaggio di errore se presente -->
-    <div th:if="${error}" style="color: red;">
-        <p th:text="${error}"></p>
-    </div>
+	
+
     
     <h1 th:text="${ricetta.nome}"> </h1>
     <div th:if="${ricetta}">
@@ -43,6 +41,7 @@
     </ul>
 </div>
 
+
  <div th:if="${ricetta.user != null}">
         Creato da: 
 			<a th:href="@{'/cuoco' + '/' + ${ricetta.user.id}}"
@@ -50,11 +49,10 @@
    
     </div>
     <div th:if="${ricetta.user == null}"> Creatore sconosciuto </div>
-
+    
     <div class="description">
-        <a th:if="${currentUsername == ricetta.user?.credentials?.username}"
-           th:href="@{'/loggedIn/ricetta/modifica/' + ${ricetta.id}}" 
-           class="button">Modifica</a>     <!--i punti ? è opzione di navigazione sicura -->
+        <a th:href="@{'/loggedIn/ricetta/modifica/' + ${ricetta.id}}" 
+           class="button">Modifica</a>
     </div>
 </body>
 </html>

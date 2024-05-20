@@ -20,7 +20,8 @@ public class CuocoController {
 	private RicetteRepository ricetteRepository;
 	@Autowired 
 	private RicetteService ricetteService;
-	/*GESTIONE CUOCHI=USER REGISTRATI*/
+	
+	/*GESTIONE PER USER NON REGISTRATI*/
 	@GetMapping("/cuochi")
 	public String getCuochi(Model model) {		
 		model.addAttribute("cuochi", this.userRepository.findAll());

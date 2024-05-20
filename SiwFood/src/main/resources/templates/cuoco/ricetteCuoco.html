@@ -46,26 +46,16 @@
     
 	<ul>
 		<li th:each="ricetta : ${ricette}">
-			<a th:href="@{'/cuoco/ricettaCuoco' + '/' + ${ricetta.id}}"
+			<a th:href="@{'/loggedIn/ricetta' + '/' + ${ricetta.id}}"
 				th:text="${ricetta.nome} "></a>
-			            <a th:href="@{'/cuoco/deleteRicetta/'+ ${ricetta.id}}">Elimina</a>
+			            <a th:href="@{'/loggedIn/deleteRicetta/'+ ${ricetta.id}}">Elimina</a>
 
 		</li>
 	</ul>
 	 <div class="description">
-	 <a href="/cuoco/addRicetteCuochi" class="button">Aggiungi nuove ricette</a>
+	 <a href="/loggedIn/addRicetta" class="button">Aggiungi nuove ricette</a>
 	 </div>
 	 
-	 <h2>Ingredienti</h2>
-	 <div th:if="${ingrediente==null }">Non ci sono ingredienti nel sistema</div>	 
-	 <ul>
-		<li th:each="ingrediente : ${ingredienti}">
-			<a th:text="${ingrediente.nome} "></a>
-
-		</li>
-	</ul>
-	 <div class="description">
-        <a href="/cuoco/addIngredientiCuochi" class="button">Aggiungi nuovi ingredienti</a>
         <!-- Visualizza il messaggio di successo se presente -->
     <div th:if="${success}" style="color: green;">
         <p th:text="${success}"></p>

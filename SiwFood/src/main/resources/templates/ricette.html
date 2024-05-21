@@ -35,14 +35,17 @@
 </html>
 -->
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>Ricette</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/manage.css">
+    <link rel="stylesheet" href="/css/ricette.css">
 
 </head>
 <body>
@@ -69,9 +72,9 @@
             <div class="col-md-4 mb-4" th:each="ricetta : ${ricette}">
                 <div class="card" style="width: 18rem;">
                     <img src="https://th.bing.com/th/id/R.e654816d8aea33d99fa694127f008d1c?rik=Y56MrJlYU3UxYg&pid=ImgRaw&r=0" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${ricetta.nome}">Nome</h5>
-                        <a th:href="@{'/ricetta' + '/' + ${ricetta.id}}" class="btn btn-primary">Guarda</a>
+                    <div class="card-body text-center">
+                        <h5 class="card-title " th:text="${ricetta.nome}">Nome</h5>
+                        <a th:href="@{'/ricetta' + '/' + ${ricetta.id}}" class="btn btn-primary ">Guarda</a>
                     </div>
                 </div>
             </div>

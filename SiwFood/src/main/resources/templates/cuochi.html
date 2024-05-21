@@ -1,27 +1,55 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Cuochi-User</title>
-  <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Ricette</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/ricette.css">
+
 </head>
 <body>
-  <!--<div id="flex-container">
-    <div class="col-container">
-      <div class="col">
-        <img src="https://i.pinimg.com/originals/dc/41/93/dc4193eafa7d63600d5369abb69d08fa.jpg" alt="Lavoro 1">
-        <h3>Lavoro 1<br>Mario Rossi</h3>
-      </div>
-    </div>-->
-
+	 <header class="header">
+    <nav class="nav">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Ricette</a></li>
+          <li><a href="#">Cuochi</a></li>
+      
+      </ul>
+    </nav>
+    <div class="cta">
+      <a href="login" class="button">Login</a>
+    </div>
+  </header>
 
 	
-	<h1>Cuochi</h1>
-	<div th:if="${cuochi == null }">Non ci sono Cuochi nel sistema</div>
-    <div th:if="${cuochi != null}">
-	<ul>
+	
+    <div class="container my-3">
+        <h1 class="text-center"> Cuochi</h1>
+	    <div th:if="${cuochi == null }">Non ci sono Cuochi nel sistema</div>
+        <div class="row" th:if="${cuochi != null}">
+			<div class="col-md-4 mb-4" th:each="cuoco : ${cuochi}">
+				<div class="card" style="width: 18rem;">
+                    <img src="https://th.bing.com/th/id/R.e654816d8aea33d99fa694127f008d1c?rik=Y56MrJlYU3UxYg&pid=ImgRaw&r=0" class="card-img-top" alt="...">
+                    <div class="card-body text-center">
+                        <a  th:href="@{'/cuoco' + '/' + ${cuoco.id}}"
+				            class="card-title" th:text="${cuoco.name}+' '+${cuoco.surname} "></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+	<!-- <ul>
 		<li th:each="cuoco : ${cuochi}">
 			<a th:href="@{'/cuoco' + '/' + ${cuoco.id}}"
 				th:text="${cuoco.name}+' '+${cuoco.surname} "></a>
@@ -35,3 +63,8 @@
   </div>
 </body>
 </html>
+-->
+
+
+
+

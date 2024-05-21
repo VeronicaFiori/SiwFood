@@ -56,22 +56,17 @@ body {
    align-items: center;
   
 }
-
-
-
-.btn-primary {
+a {
     color: black;
-    background-color: pink;
-    border-color: #007bff;
-    
-
+    text-decoration: none;
+    background-color: transparent;
 }
 
-
-
-.card-title{
+a.card-title{
   font-size: 1.25em;
 }
+
+
 
 /* Media query per dispositivi più piccoli */
 @media (max-width: 600px) {

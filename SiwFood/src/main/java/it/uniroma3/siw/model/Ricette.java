@@ -1,8 +1,8 @@
 package it.uniroma3.siw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -33,8 +33,18 @@ public class Ricette {
 	@OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL)
     private List<Ingrediente> ingredienti;
 	
+	 @OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL, orphanRemoval = true)
+	    private List<RicettaIngrediente> ingredientiQuantita = new ArrayList<>();
+
 	
 	
+	
+	public List<RicettaIngrediente> getIngredientiQuantita() {
+		return ingredientiQuantita;
+	}
+	public void setIngredientiQuantita(List<RicettaIngrediente> ingredientiQuantita) {
+		this.ingredientiQuantita = ingredientiQuantita;
+	}
 	public User getUser() {
 		return user;
 	}

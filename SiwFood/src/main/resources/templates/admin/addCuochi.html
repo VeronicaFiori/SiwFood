@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		SiwFood - Login
+	</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
+			<a href="/logout">Logout</a>
+		</di-v>
+		<div th:unless="${user}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+
+	<h1>Aggiungi un nuovo cuoco</h1>
+	<form th:action="@{'/loggedIn/cuoco'}" method="POST" th:object="${cuoco}">
+		<div th:if="${#fields.hasGlobalErrors()}">
+  			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
+  		</div>
+		    <div>
+			    <label>Nome:</label>
+			    <span><input type="text" th:field="${cuoco.name}"  required /></span>
+			    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">  </span>
+		    </div>
+			<!--<div>
+			    <label>Ingredienti:</label>
+			    <span><input type="text" th:field="${cuoco.nome}"  required /></span>
+			    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">  </span>
+		    </div> -->
+            <div>
+			    <label>Cognome:</label>
+			    <input type="text" th:field="${cuoco.surname}"  required /> </span>
+			    <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">  </span>
+		    </div>
+		    <div>
+			<label>Data di nascita:</label> <span><input type="date" th:field="${cuoco.dataNascita}" /></span>
+			<span th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}">  </span>
+			</div>
+			<div>
+			<label>Email:</label> <span><input type="email" th:field="${cuoco.email}" /></span>
+			<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">  </span>
+			</div>
+			
+			<h2>Credenziali</h2>
+			<div>
+			<label>Username:</label> <span><input type="text" th:field="${cuoco.credentials.username}" /></span>
+			<span th:if="${#fields.hasErrors('credentials.username')}" th:errors="*{credentials.username}">  </span>
+			</div>
+			<div>
+			<label>Password:</label> <span><input type="password" th:field="${cuoco.credentials.password}" /></span>
+			<span th:if="${#fields.hasErrors('cuoco.credentials.password')}" th:errors="*{cuoco.credentials.password}">  </span>
+			</div>
+
+
+	</form>
+
+        <div>
+            <button type="submit">Aggiungi cuoco</button>
+        </div>
+</body>
+
+</html>

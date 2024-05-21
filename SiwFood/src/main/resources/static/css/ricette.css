@@ -3,65 +3,71 @@ body {
   background-color: #eaf6f8;
   margin: 0;
   padding: 0;
-  display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-#flex-container {
+/*HEADER*/
+
+.header {
   display: flex;
-  flex-wrap: wrap; /* Permette ai box di andare a capo */
-  justify-content: space-around; /* Distribuisce gli elementi con spazio intorno */
-  align-items: flex-start; /* Allinea gli elementi all'inizio del contenitore */
-  padding: 20px;
-  width: 100%;
-  max-width: 1200px; /* Imposta una larghezza massima per il contenitore */
-  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  background-color: azure;
+  
 }
 
-.col-container {
-  flex: 0 1 calc(33.333% - 20px); /* Imposta ogni box per occupare un terzo dello spazio meno il margine */
-  margin: 10px; /* Aggiunge margine tra i box */
-  box-sizing: border-box; /* Include padding e border nella larghezza */
+
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
 }
 
-.col {
-  position: relative;
-  width: 100%;
-  border-radius: 10px;
-  overflow: hidden; /* Assicura che i contenuti non escano dal box */
+.nav ul li {
+  margin: 0;
+   padding: 10px 10px;
 }
 
-.col img {
-  width: 100%;
-  height: auto;
-  display: block;
+.nav ul li a {
+  text-decoration: none;
+  color: #333;
 }
 
-.col h3 {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+.cta .button {
+  background-color: #ff4b5c;
   color: white;
-  text-align: center;
-  font-size: 1.2em;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px;
+  padding: 10px 20px;
   border-radius: 5px;
-  width: calc(100% - 40px);
-  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: 700;
+}
+/**/
+
+.btn-primary {
+    color: #fff;
+    background-color: pink;
+    border-color: #007bff;
 }
 
-@media (max-width: 800px) {
-  .col-container {
-    flex: 0 1 calc(50% - 20px); /* Imposta ogni box per occupare metà dello spazio disponibile su schermi più piccoli */
+
+
+/* Media query per dispositivi più piccoli */
+@media (max-width: 600px) {
+  .card {
+    flex: 0 0 250px; /* Riduce la larghezza della card */
+    max-width: 250px;
   }
-}
 
-@media (max-width: 500px) {
-  .col-container {
-    flex: 0 1 100%; /* Imposta ogni box per occupare l'intera larghezza del contenitore su schermi ancora più piccoli */
+  .card-content h3 {
+    font-size: 1.2em; /* Riduce la dimensione del testo */
+  }
+
+  .card-content p {
+    font-size: 0.9em; /* Riduce la dimensione del testo */
   }
 }

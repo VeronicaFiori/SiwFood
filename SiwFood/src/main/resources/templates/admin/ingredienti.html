@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Box con Immagini</title>
+  <link rel="stylesheet" href="/css/cuoco/ricetteCuoco.css">
+</head>
+<body>
+	
+	<header class="header">
+    <nav class="nav">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Ricette</a></li>
+        <li><a href="#">Cuochi</a></li>
+      </ul>
+    </nav>
+    <div class="cta">
+	  <div th:if="${userDetails}">
+	     <span th:text="${userDetails.username}"></span>
+         <a href="logout" class="button">Logout</a>
+	  </div>
+	  <div th:unless="${user}">
+         <a href="login" class="button">Login</a>
+     </div>
+  </header>
+  
+  <!--<div id="flex-container">
+    <div class="col-container">
+      <div class="col">
+        <img src="https://i.pinimg.com/originals/dc/41/93/dc4193eafa7d63600d5369abb69d08fa.jpg" alt="Lavoro 1">
+        <h3>Lavoro 1<br>Mario Rossi</h3>
+      </div>
+    </div>-->
+
+
+    
+	<h1>Ingredenti</h1>
+	
+	<div th:if="${ingrediente==null }">Non ci sono ingredienti nel sistema</div>
+    
+	<ul>
+		<li th:each="ingrediente : ${ingrediente}">
+			<a th:text="${ingrediente.nome} "></a>
+			  <a th:href="@{'/loggedIn/deleteIngrediente/'+ ${ingrediente.id}}">Elimina</a>
+
+		</li>
+	</ul>
+	</div>
+	    <!-- Visualizza il messaggio di successo se presente -->
+    <div th:if="${success}" style="color: green;">
+        <p th:text="${success}"></p>
+    </div>
+
+	 
+	 <div class="description">
+        <a href="/loggedIn/addIngredienti" class="button">Aggiungi nuovi ingredienti</a>
+       
+
+     </div>
+</body>
+
+</html>
+    
+  </div>
+</body>
+</html>

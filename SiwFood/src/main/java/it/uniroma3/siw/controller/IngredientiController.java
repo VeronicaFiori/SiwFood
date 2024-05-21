@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Ingrediente;
+import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.IngredienteRepository;
 import it.uniroma3.siw.repository.RicetteRepository;
 import it.uniroma3.siw.service.CredentialsService;
@@ -36,14 +37,24 @@ public class IngredientiController {
 	public String getIngredienteCuoco(Model model) {	
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-		
+
 		model.addAttribute("ingrediente", this.ingredienteRepository.findAll());
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			return "/admin/ingredienti.html";
 		}
 		return "/cuoco/ingredienti.html";
 	}
-	
+
+	/*SOLO ADMIN PUO ELIMINARE GLI INGREDIENTI*/
+	@GetMapping("/loggedIn/deleteIngrediente/{id}")
+	public String deleteIngrediente(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+
+		ingredienteRepository.deleteById(id);		
+		redirectAttributes.addFlashAttribute("success", "Ingrediente eliminato con successo!");
+		return "redirect:/loggedIn/ingredienti";
+	}
+
+
 
 	@GetMapping("/loggedIn/ingrediente/{id}")
 	public String getIngredienti(@PathVariable("id") Long id, Model model) {

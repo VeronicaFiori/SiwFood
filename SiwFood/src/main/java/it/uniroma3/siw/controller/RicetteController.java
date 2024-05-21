@@ -3,7 +3,6 @@ package it.uniroma3.siw.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,11 +19,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Ingrediente;
+import it.uniroma3.siw.model.RicettaIngrediente;
 import it.uniroma3.siw.model.Ricette;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.IngredienteRepository;
 import it.uniroma3.siw.repository.RicetteRepository;
-import it.uniroma3.siw.repository.UserRepository;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.IngredienteService;
 import it.uniroma3.siw.service.RicetteService;
@@ -47,6 +46,8 @@ public class RicetteController {
 	
 	@Autowired
 	private CredentialsService credentialsService;
+	
+	
 	//	@Autowired 
 	//	private RicetteValidator ricetteValidator;
 
@@ -117,23 +118,66 @@ public class RicetteController {
 //	}
 //	
 	   /*VISUALIZZAZIONE PAGINA RICETTA CON UN CERTO ID */
-		@GetMapping("/loggedIn/ricetta/{id}")
-		public String getRicettaLoggedIn(@PathVariable("id") Long id, Model model) {
-			Ricette ricetta = ricetteService.findById(id);
-			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		    String currentUsername = userDetails.getUsername();
-			//model.addAttribute("ricetta", this.ricetteRepository.findById(id).get());
-		    List<Ingrediente> ingredienti = ingredienteService.getIngredientiByRicetta(ricetta);
-		    model.addAttribute("ricetta", ricetta);
-		    model.addAttribute("ingredienti", ingredienti);
-		    model.addAttribute("currentUsername", currentUsername);
-		    
-			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-			if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-				return "/admin/ricettaAdmin.html";
-			}
-			return "/cuoco/ricettaCuoco.html";
-		}
+//		@GetMapping("/loggedIn/ricetta/{id}")
+//		public String getRicettaLoggedIn(@PathVariable("id") Long id, Model model) {
+//			Ricette ricetta = ricetteService.findById(id);
+//			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		    String currentUsername = userDetails.getUsername();
+//		    
+//		    List<RicettaIngrediente> ingredienti = ricettaIngredienteService.findByRicetta(ricetta);
+//
+//		    
+//			//model.addAttribute("ricetta", this.ricetteRepository.findById(id).get());
+//		    List<Ingrediente> ingredienti = ingredienteService.getIngredientiByRicetta(ricetta);
+//		    model.addAttribute("ricetta", ricetta);
+//		    model.addAttribute("ingredienti", ingredienti);
+//		    model.addAttribute("currentUsername", currentUsername);
+//		    
+//			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+//			if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+//				return "/admin/ricettaAdmin.html";
+//			}
+//			return "/cuoco/ricettaCuoco.html";
+//		}
+	
+
+	@GetMapping("/loggedIn/ricetta/{id}")
+	public String getRicettaLoggedIn(@PathVariable("id") Long id, Model model) {
+	    Ricette ricetta = ricetteService.findById(id);
+	    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    String currentUsername = userDetails.getUsername();
+/******************/
+	    
+	    List<RicettaIngrediente> ingredientiQuantita = ricetta.getIngredientiQuantita();
+	    for (RicettaIngrediente ri : ingredientiQuantita) {
+	        System.out.println("Ingrediente: " + ri.getIngrediente().getNome() + ", Quantità: " + ri.getQuantita());
+	    }
+/******************/
+	    model.addAttribute("ricetta", ricetta);
+	    model.addAttribute("ingredientiQuantita", ricetta.getIngredientiQuantita());
+	    model.addAttribute("currentUsername", currentUsername);
+
+	    Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+	    if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+	        return "/admin/ricettaAdmin.html";
+	    }
+	    return "/cuoco/ricettaCuoco.html";
+	}
+
+	
+	/******************
+     prova
+	 */
+	
+
+
+	
+	/******************
+    fineprova
+	 */
+	
+
+	
 	
 
     /*UN USER PUO ELIMINARE LA PROPRIA RICETTA */
@@ -284,7 +328,7 @@ public class RicetteController {
 //	    }
 //	}
 	
-	
+	/*	qua andava*/
 
 	
 	@GetMapping("/loggedIn/ricetta/modifica/{id}")
@@ -348,6 +392,70 @@ public class RicetteController {
 	}
 
 
+		/*	fino a qua */
+    
+	
+//	    @PostMapping("/loggedIn/ricetta/modifica/{id}")
+//	    public String editRicetta(@Valid @ModelAttribute Ricette ricetta, BindingResult bindingResult, 
+//                @RequestParam("ingredientiIds") List<Long> ingredientiIds, 
+//                @RequestParam Map<String, String> requestParams, 
+//                RedirectAttributes redirectAttributes){
+//	        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//	        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+//	        User currentUser = userService.getUserByCredentials(userDetails).orElseThrow(() -> new RuntimeException("User not found"));
+//	        ricetta.setUser(currentUser);
+//	        List<RicettaIngrediente> ingredientiQuantita = new ArrayList<>();
+//	        for (Long ingredienteId : ingredientiIds) {
+//	            Ingrediente ingrediente = ingredienteService.getIngrediente(ingredienteId);
+//	            String quantita = requestParams.get("quantita_" + ingredienteId);
+//
+//	            RicettaIngrediente ricettaIngrediente = new RicettaIngrediente();
+//	            ricettaIngrediente.setRicetta(ricetta);
+//	            ricettaIngrediente.setIngrediente(ingrediente);
+//	            ricettaIngrediente.setQuantita(quantita);
+//	            ricettaIngrediente.getId().setRicettaId(ricetta.getId());
+//	            ricettaIngrediente.getId().setIngredienteId(ingrediente.getId());
+//
+//	            ingredientiQuantita.add(ricettaIngrediente);
+//	        }
+//
+//	        ricetta.setIngredientiQuantita(ingredientiQuantita);
+//	        ricetteService.save(ricetta);
+//
+//	        redirectAttributes.addFlashAttribute("success", "Ricetta aggiunta con successo!");
+//	        
+//
+//	        if (!credentials.getRole().equals(Credentials.ADMIN_ROLE) && 
+//	            !ricetta.getUser().getCredentials().getUsername().equals(userDetails.getUsername())) {
+//	            return "redirect:/loggedIn/ricette";
+//	        }
+//	        return "redirect:/loggedIn/ricette";
+//	    }
+}
+
+
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 
 //	NON VA IL MAPPPING !!!!
 //	@GetMapping(value="/cuoco/ricettaCuoco/modifica/' + ${ricetta.id}}")
@@ -378,4 +486,4 @@ public class RicetteController {
 	
 	
 
-}
+

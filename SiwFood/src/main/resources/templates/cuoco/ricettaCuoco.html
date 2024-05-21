@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,54 +7,37 @@
     <title>Ricetta</title>
     <link rel="stylesheet" href="/css/cuoco/ricetteCuoco.css" />
 </head>
-
 <body>
-    <!-- Visualizza il messaggio di errore se presente -->
-    <div th:if="${error}" style="color: red;">
-        <p th:text="${error}"></p>
-    </div>
-    
     <h1 th:text="${ricetta.nome}"> </h1>
     <div th:if="${ricetta}">
-        <span th:text="${ricetta.descrizione}">2000</span>
+        <span th:text="${ricetta.descrizione}">Descrizione della ricetta</span>
     </div>
     <div th:unless="${ricetta}">Non ci sono ricette</div>
     
-<!--    <h2>Ingredienti</h2> 
-    <div th:if="${ricetta.ingredienti}">
+    <h2>Ingredienti</h2>
+    <div th:if="${ingredientiQuantita != null && !ingredientiQuantita.isEmpty()}">
         <ul>
-            <li th:each="ingrediente : ${ingredienti}">
-                <span th:text="${ingrediente.nome}"> Nome</span>  
-                <span th:text="${ingrediente.quantita}">Quantita'</span>
+            <li th:each="ricettaIngrediente : ${ingredientiQuantita}">
+                <span th:text="${ricettaIngrediente.ingrediente.nome}">Nome Ingrediente</span>
+                <span th:text="${ricettaIngrediente.quantita}">Quantità</span>
             </li>
         </ul>
     </div>
-    <div th:unless="${ricetta.ingredienti}">Non ci sono ingredienti</div>
--->
-<h2>Ingredienti</h2>
-<div th:if="${ingredienti==null}">Non ci sono ingredienti</div>
-	<div th:unless="${ingredienti==null}">
-		<div>ciao</div>
-    <ul>
-        <li th:each="ingrediente : ${ingredienti}">
-            <span th:text="${ingrediente.nome}">Nome</span>
-            <span th:text="${ingrediente.quantita}">Quantita'</span>
-        </li>
-    </ul>
-</div>
+    <div th:if="${ingredientiQuantita == null || ingredientiQuantita.isEmpty()}">
+        Non ci sono ingredienti associati a questa ricetta
+    </div>
 
- <div th:if="${ricetta.user != null}">
+    <div th:if="${ricetta.user != null}">
         Creato da: 
-			<a th:href="@{'/cuoco' + '/' + ${ricetta.user.id}}"
-				th:text="${ricetta.user.name}+' '+${ricetta.user.surname} "></a>
-   
+        <a th:href="@{'/cuoco' + '/' + ${ricetta.user.id}}"
+           th:text="${ricetta.user.name} + ' ' + ${ricetta.user.surname} "></a>
     </div>
     <div th:if="${ricetta.user == null}"> Creatore sconosciuto </div>
 
     <div class="description">
         <a th:if="${currentUsername == ricetta.user?.credentials?.username}"
            th:href="@{'/loggedIn/ricetta/modifica/' + ${ricetta.id}}" 
-           class="button">Modifica</a>     <!--i punti ? è opzione di navigazione sicura -->
+           class="button">Modifica</a>
     </div>
 </body>
 </html>

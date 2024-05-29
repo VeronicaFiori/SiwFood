@@ -52,4 +52,7 @@ public class RicetteService {
         return ricetteRepository.findByUserId(cuocoId); 
     }
 
+    public List<Ricette> findByCategoria(String categoria) {
+        return ricetteRepository.findByCategoria(categoria);
+    }
 }

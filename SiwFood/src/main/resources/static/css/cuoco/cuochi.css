@@ -60,10 +60,14 @@ a {
     color: black;
     text-decoration: none;
     background-color: transparent;
-}
+    font-size: 1em;
 
+}
+div.card-body{
+	color:black;
+}
 a.card-title{
-  font-size: 1.25em;
+  font-size: 1em;
 }
 
 

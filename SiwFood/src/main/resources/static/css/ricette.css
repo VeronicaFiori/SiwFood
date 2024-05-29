@@ -70,7 +70,9 @@ body {
 
 
 .card-title{
-  font-size: 1.25em;
+  font-size: 1.5em;
+    font-weight: 500;
+
 }
 
 /* Media query per dispositivi più piccoli */

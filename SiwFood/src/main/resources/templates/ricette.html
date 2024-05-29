@@ -36,7 +36,7 @@
 -->
 
 
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -66,12 +66,15 @@
     <div class="container my-3">
         <h1 class="text-center"> Ricette</h1>
         
+        
+        
+        
         <div th:if="${ricette == null || ricette.isEmpty()}">Non ci sono Ricette nel sistema</div>
         
         <div class="row" th:unless="${ricette == null || ricette.isEmpty()}">
             <div class="col-md-4 mb-4" th:each="ricetta : ${ricette}">
                 <div class="card" style="width: 18rem;">
-                    <img src="https://th.bing.com/th/id/R.e654816d8aea33d99fa694127f008d1c?rik=Y56MrJlYU3UxYg&pid=ImgRaw&r=0" class="card-img-top" alt="...">
+                    <img src="https://www.smeg.com/binaries/content/gallery/smeg-southafrica/lifestyle-images/traditional-spaghetti-carbonara-top-image-web.jpg/traditional-spaghetti-carbonara-top-image-web.jpg/brx%3ApostcardDeskLarge" class="card-img-top" alt="...">
                     <div class="card-body text-center">
                         <h5 class="card-title " th:text="${ricetta.nome}">Nome</h5>
                         <a th:href="@{'/ricetta' + '/' + ${ricetta.id}}" class="btn btn-primary ">Guarda</a>
@@ -85,4 +88,56 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
+</html> -->
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricette</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/manage.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/ricette">Ricette</a></li>
+                <li><a href="/cuochi">Cuochi</a></li>
+            </ul>
+        </nav>
+        <div class="cta">
+            <a href="login" class="button">Login</a>
+        </div>
+    </header>
+    
+    <div class="container my-3">
+        <h1 class="text-center">Categorie di Ricette</h1>
+        <a th:href="@{'/ricette/Primi Piatti'}">Primi Piatti</a>
+        <a th:href="@{'/ricette/Secondi Piatti'}">Secondi Piatti</a>
+        <a th:href="@{'/ricette/Antipasti'}">Antipasti</a>
+        <a th:href="@{'/ricette/Dessert'}">Dolci</a>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
 </html>
+
+
+
+
+
+
+
+

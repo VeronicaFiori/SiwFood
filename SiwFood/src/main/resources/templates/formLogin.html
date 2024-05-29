@@ -2,6 +2,62 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Ricette</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/ricette.css">
+
+</head>
+<body>
+	 <header class="header">
+    <nav class="nav">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/ricette">Ricette</a></li>
+          <li><a href="/cuochi">Cuochi</a></li>
+      
+      </ul>
+    </nav>
+    <div class="cta">
+      <a href="login" class="button">Login</a>
+    </div>
+  </header>
+  
+<div class="container">
+        
+        <h1 class="text-center my-4">Login utente</h1>	<form th:action="@{/login}" method="POST">
+			<div>
+				<span>Username:</span>
+				<input  class="form-control" name="username" type="text" placeholder="username" required /></span>
+			</div>
+			<div>
+				<span>Password:</span>
+				<input  class="form-control" name="password" type="password" placeholder="password" required /></span>
+			</div>
+			<div>
+				<span th:if="${param.error != null}">Username o password errati</span>
+			</div>
+  
+			<div class="col-12 text-center  my-5">
+                <button class="btn btn-primary" type="submit">Login</button>
+		      
+             </div>
+	</form>
+           
+    <h3 class=" my-4">Se non hai mai effettuato l'accesso: </h1>	
+
+	<div class="col-12  my-5">
+      	<a th:href="@{/register}" class="btn btn-primary">Registrati</a>
+	</div>
+</body>
+
+
+</html>
+<!--
+<head>
 	<title>
 		SiwMovie - Login
 	</title>
@@ -44,4 +100,4 @@
 	</div>
 </body>
 
-</html>
+</html> -->

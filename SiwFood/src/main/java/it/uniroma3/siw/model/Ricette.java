@@ -28,8 +28,18 @@ public class Ricette {
 	
 	@ManyToOne
     private User user;
+	@NotBlank
+	private String categoria;
 	
 	
+	
+	
+	public String getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
 	@OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL)
     private List<Ingrediente> ingredienti;
 	

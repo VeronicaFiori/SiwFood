@@ -6,6 +6,8 @@
 		SiwFood - Login
 	</title>
 	<link rel="stylesheet" href="/css/stile.css" />
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
 </head>
 
 <body>
@@ -20,7 +22,9 @@
 	</header>
 
 	<h1>Aggiungi una ricetta</h1>
-	<form th:action="@{'/loggedIn/ricetta'}" method="POST" th:object="${ricetta}">
+	<form th:action="@{'/loggedIn/ricetta/'+${categoria}}" method="POST" th:object="${ricetta}">
+		   
+
 		<div th:if="${#fields.hasGlobalErrors()}">
   			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
   		</div>
@@ -29,18 +33,24 @@
 			    <span><input type="text" th:field="${ricetta.nome}"  required /></span>
 			    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">  </span>
 		    </div>
-			<!--<div>
-			    <label>Ingredienti:</label>
-			    <span><input type="text" th:field="${ricetta.nome}"  required /></span>
-			    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">  </span>
-		    </div> -->
+
             <div>
 			    <label>Descrizione:</label>
 			    <span><textarea type="text" th:field="${ricetta.descrizione}"  required /></span> </span>
 			    <span th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}">  </span>
 		    </div>
-			
-			
+		 
+		      <div>
+		       <label>Categoria:</label>
+		       <select class="form-select" aria-label="Categoria" th:field="${ricetta.categoria}" name="categoria">
+                  <option value="" selected>Scegli la categoria:</option>
+                  <option value="Antipasti">Antipasto</option>
+                  <option value="Primi Piatti">Primo piatto</option>
+                  <option value="Secondi Piatti">Secondo piatto</option>
+                  <option value="Dessert">Dessert</option>
+               </select> 
+		    </div>
+	
 			
 			<h2>Aggiungi Ingrediente alla Ricetta</h2>
     <!--         <form th:action="@{/cuoco/ricettaCuoco}" method="post">

@@ -17,11 +17,21 @@
             </ul>
         </nav>
         <div class="cta">
-            <a href="login" class="button">Login</a>
-        </div>
+       <div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
+			<a href="/logout" class="button">Logout</a>
+		</div>
+		 
+	</div>
     </header>
+    
+ 
          
     <div class="container my-3">
+		 <!-- Visualizza il messaggio di successo se presente -->
+        <div th:if="${error}" style="color: red;">
+          <p th:text="${error}"></p>
+        </div>
         <h1 class="text-center" th:text="'Ricette: ' + ${categoria}"></h1>
 
         <div th:if="${ricette == null || ricette.isEmpty()}">Non ci sono Ricette nel sistema</div>

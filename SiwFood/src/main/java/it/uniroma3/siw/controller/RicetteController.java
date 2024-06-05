@@ -24,6 +24,7 @@ import it.uniroma3.siw.model.Ricette;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.IngredienteRepository;
 import it.uniroma3.siw.repository.RicetteRepository;
+import it.uniroma3.siw.repository.UserRepository;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.IngredienteService;
 import it.uniroma3.siw.service.RicetteService;
@@ -46,6 +47,9 @@ public class RicetteController {
 
 	@Autowired
 	private CredentialsService credentialsService;
+	
+	@Autowired
+	private  UserRepository userRepository;
 
 
 	//	@Autowired 
@@ -72,6 +76,8 @@ public class RicetteController {
 		Ricette ricetta = ricetteRepository.findById(id).get();
 
 		model.addAttribute("ricetta", ricetta);
+		model.addAttribute("cuochi", userRepository.findById(id).get());
+
 		return "ricetta.html";
 	}
 	
@@ -170,6 +176,7 @@ public class RicetteController {
 		model.addAttribute("ricetta", ricetta);
 		model.addAttribute("ingredientiQuantita", ricetta.getIngredientiQuantita());
 		model.addAttribute("currentUsername", currentUsername);
+		model.addAttribute("ingrediente", ricetta.getIngredienti());
 
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
@@ -271,8 +278,11 @@ public class RicetteController {
 
 			model.addAttribute("ricetta", new Ricette());
 			model.addAttribute("ingredienti", ingredienteService.findAll());
-		//	model.addAttribute("categoria", categoria);
+
 			if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+				// Recupera gli utenti con ruolo "DEFAULT" solo per l'admin
+		        List<User> cuochi = userRepository.findByRole(Credentials.DEFAULT_ROLE);
+		        model.addAttribute("cuochi", cuochi);
 				return "/admin/addRicetteAdmin.html";
 
 			}
@@ -295,7 +305,7 @@ public class RicetteController {
 				return "cuoco/addRicetteCuochi.html";
 			}
 			User currentUser = userService.getUserByCredentials(userDetails).orElseThrow(() -> new RuntimeException("User not found"));
-			ricetta.setUser(currentUser);
+			//ricetta.setUser(currentUser);
 
 			List<Ingrediente> ingredientiSelezionati = new ArrayList<>();
 			for (Long ingredienteId : ingredientiIds) {
@@ -305,8 +315,16 @@ public class RicetteController {
 				ingredientiSelezionati.add(ingrediente);
 			}
 
+			
+			/**/
+			User chefId = ricetta.getUser();
+			ricetta.setUser(chefId);
+
+			/**/
 			ricetta.setIngredienti(ingredientiSelezionati);			 
 			ricetteService.save(ricetta);
+			
+
 
 			redirectAttributes.addFlashAttribute("success", "Ricetta aggiunta con successo!");
 
@@ -394,7 +412,7 @@ public class RicetteController {
 			}
 			if (!ricetta.getUser().getCredentials().getUsername().equals(userDetails.getUsername())) {
 				redirectAttributes.addFlashAttribute("error", "Utente non autorizzato a modificare questa ricetta");
-				return "redirect:/loggedIn/ricette";
+				return "redirect:/ricette/categoria";
 			}
 
 			model.addAttribute("ricetta", ricetta);
@@ -409,15 +427,15 @@ public class RicetteController {
 
 
 		@PostMapping("/loggedIn/ricetta/modifica/{id}")
-		public String editRecipe(@PathVariable("id") Long id, @Valid @ModelAttribute("ricetta") Ricette aggRicetta, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+		public String editRicetta(@PathVariable("id") Long id, @Valid @ModelAttribute("ricetta") Ricette aggRicetta, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-			if (bindingResult.hasErrors()) {
-				if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-					return "/admin/modifica.html";
-				}
-				return "/cuoco/modifica.html";
-			}
+//			if (bindingResult.hasErrors()) {
+//				if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+//					return "/admin/modifica.html";
+//				}
+//				return "/cuoco/modifica.html";
+//			}
 
 
 			Ricette ricetta = ricetteService.getRicetta(id);
@@ -436,7 +454,8 @@ public class RicetteController {
 			//	    if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			//	    	return "/admin/modifica.html";
 			//	    }
-			return "redirect:/loggedIn/ricette";
+			//return "redirect:/loggedIn/ricetta/{id}";
+			return "redirect:/loggedIn/ricetta/{id}";
 		}
 
 

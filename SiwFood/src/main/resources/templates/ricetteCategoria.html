@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<!--
+	<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -35,3 +36,89 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
+-->
+
+
+
+<!DOCTYPE html>
+<html >
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ricette</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+     <link rel="stylesheet" href="/css/categoria.css">
+
+
+</head>
+
+<body>
+    
+     <header class="header">
+        <nav class="nav">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/ricette">Ricette</a></li>
+                <li><a href="/cuochi">Cuochi</a></li>
+            </ul>
+        </nav>
+      <div class="cta">
+       <div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
+			<a href="/logout" class="button">Logout</a>
+		</div>
+		 
+	</div>
+    </header>
+    
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card text-bg-dark w-100">
+                    <img src="https://www.repstatic.it/content/localirep/img/rep-napoli/2018/01/02/153712304-6be334ac-2107-4847-84cb-27eeaaaf14b1.jpg" class="card-img" alt="...">
+                    <div class="card-img-overlay">
+                        <a class="text" th:href="@{'/ricette/categoria/Primi Piatti'}">Primi Piatti</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mb-4">
+                <div class="card text-bg-dark w-100">
+                    <img src="https://file.cure-naturali.it/site/image/content/23801.jpg?format=jpg" class="card-img" alt="...">
+                    <div class="card-img-overlay">
+                        <a class="text" th:href="@{'/ricette/categoria/Secondi Piatti'}">Secondi Piatti</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mb-4">
+                <div class="card text-bg-dark w-100">
+                    <img src="https://source.unsplash.com/random/400x202" class="card-img" alt="...">
+                    <div class="card-img-overlay">
+                        <a class="text" th:href="@{'/ricette/categoria/Antipasti'}">Antipasti</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mb-4">
+                <div class="card text-bg-dark w-100">
+                    <img src="https://source.unsplash.com/random/400x203" class="card-img" alt="...">
+                    <div class="card-img-overlay">
+                        <a class="text" th:href="@{'/ricette/categoria/Dessert'}">Dessert</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+
+
+

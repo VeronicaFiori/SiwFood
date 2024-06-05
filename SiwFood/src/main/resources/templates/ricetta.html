@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<!--
+	<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -32,3 +33,96 @@
     </div>
   </body>
 </html>
+-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cuoco</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/ricette.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/ricette">Ricette</a></li>
+                <li><a href="/cuochi">Cuochi</a></li>
+            </ul>
+        </nav>
+        <div class="cta">
+            <a href="/login" class="button">Login</a>
+        </div>
+    </header>
+  
+  
+  
+  
+
+<body>
+    <h1 class="text-center my-4" th:text="${ricetta.nome}">Ricetta </h1>
+
+	<div class="container">
+
+       <div th:if="${ricetta}">
+         <div class="row g-0 bg-body-secondary position-relative">
+         <div class="col-md-6 mb-md-0 p-md-4">
+         <img src="https://th.bing.com/th/id/R.eacaeaa346d0c77f45805773bc150e4b?rik=7z3rp7H0bEFW0A&riu=http%3a%2f%2f7428.net%2fwp-content%2fuploads%2f2014%2f02%2fCartoon-Chef-Vector.jpg&ehk=01WycGhGY0Q%2bTV8nQzUxK8DO%2bh1sY1lJXZxso1u38%2bg%3d&risl=&pid=ImgRaw&r=0" class="w-100" alt="...">
+         </div>
+           
+         <div class="col-md-6 p-4 ps-md-0 text-center ">
+           <p> Descrizione:   </p>
+           <span th:text="${ricetta.descrizione}">2000</span>
+           
+          <!--CHEF CREATORE-->
+           <div th:if="${ricetta.user != null}" class="row my-3">
+                <h5> Chef creatore di questa ricetta: </h5>
+            </div>
+            <div class="text-center">
+                <a th:href="@{'/cuoco' + '/' + ${ricetta.user.id}}"
+                   th:text="${ricetta.user.name}+' '+${ricetta.user.surname} ">Chef</a>
+            </div>
+        </div>
+        <div th:if="${ricetta.user == null}">
+            Creatore sconosciuto
+        </div>
+        </div>
+        <div th:unless="${ricetta}">Non ci sono ricette</div>
+      </div>
+    </div>
+
+     <h2>Ingredienti</h2>
+        <div th:if="${ingredienti}">
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+                        <strong>Ingrediente</strong>
+                    </div>
+                    <div class="col">
+                        <strong>Quantità</strong>
+                    </div>
+                </div>
+                <ul class="list-group ingredienti-list" >
+                    <li class="list-group-item" th:each="ingrediente : ${ingredienti}">
+                        <div class="row">
+                            <div class="col" th:text="${ingrediente.nome}">Nome Ingrediente</div>
+                            <div class="col" th:text="${ingrediente.quantita}">Quantità Ingrediente</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div th:unless="${ingredienti}">Non ci sono ingredienti</div>
+    </div>
+  </body>
+
+  
+</html>
+  
+  
+ 

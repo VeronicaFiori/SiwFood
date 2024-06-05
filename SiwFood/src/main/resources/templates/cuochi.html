@@ -30,8 +30,8 @@
     <div class="container my-3">
         <h1 class="text-center"> Cuochi</h1>
 	    <div th:if="${cuochi == null }">Non ci sono Cuochi nel sistema</div>
-        <div class="row" th:if="${cuochi != null}">
-			<div class="col-md-4 mb-4" th:each="cuoco : ${cuochi}">
+        <div class="row" th:if="${cuochi != null} ">
+			<div class="col-md-4 mb-4" th:each="cuoco : ${cuochi}" >
 				<div class="card" style="width: 18rem;">
                     <img src="https://th.bing.com/th/id/R.e654816d8aea33d99fa694127f008d1c?rik=Y56MrJlYU3UxYg&pid=ImgRaw&r=0" class="card-img-top" alt="...">
                     <div class="card-body text-center">

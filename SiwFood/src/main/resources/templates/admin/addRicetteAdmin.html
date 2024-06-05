@@ -3,7 +3,7 @@
 
 <head>
 	<title>
-		SiwFood - Login
+		addRicetta
 	</title>
 	<link rel="stylesheet" href="/css/stile.css" />
 </head>
@@ -20,7 +20,7 @@
 	</header>
 
 	<h1>Aggiungi una ricetta</h1>
-	<form th:action="@{'/loggedIn/ricetta'}" method="POST" th:object="${ricetta}">
+	<form th:action="@{'/loggedIn/ricetta/'+${categoria}}" method="POST" th:object="${ricetta}">
 		<div th:if="${#fields.hasGlobalErrors()}">
   			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
   		</div>
@@ -39,6 +39,26 @@
 			    <span><textarea type="text" th:field="${ricetta.descrizione}"  required /></span> </span>
 			    <span th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}">  </span>
 		    </div>
+		    
+		    <div>
+		       <label>Categoria:</label>
+		       <select class="form-select" aria-label="Categoria" th:field="${ricetta.categoria}" name="categoria">
+                  <option value="" selected>Scegli la categoria:</option>
+                  <option value="Antipasti">Antipasto</option>
+                  <option value="Primi Piatti">Primo piatto</option>
+                  <option value="Secondi Piatti">Secondo piatto</option>
+                  <option value="Dessert">Dessert</option>
+               </select> 
+		    </div>
+	
+	         <div class="form-group">
+            <label for="user">Chef:</label>
+            <select class="form-select" th:field="${ricetta.user.id}" id="user" name="userId" required>
+               <option value="" selected>Scegli lo Chef:</option>
+                <option th:each="cuoco : ${cuochi}" th:value="${cuoco.id}" th:text="${cuoco.name + ' ' + cuoco.surname}"></option>
+            </select>
+            </div>
+	
 			
 			
 			

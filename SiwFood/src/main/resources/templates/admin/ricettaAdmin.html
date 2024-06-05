@@ -48,7 +48,9 @@
 				th:text="${ricetta.user.name}+' '+${ricetta.user.surname} "></a>
    
     </div>
-    <div th:if="${ricetta.user == null}"> Creatore sconosciuto </div>
+    <div th:if="${ricetta.user == null}"> Creatore sconosciuto </div> 
+    
+   
     
     <div class="description">
         <a th:href="@{'/loggedIn/ricetta/modifica/' + ${ricetta.id}}" 

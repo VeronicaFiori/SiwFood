@@ -24,12 +24,13 @@
 	<h1>Cuochi</h1>
 	<div th:if="${cuochi == null }">Non ci sono Cuochi nel sistema</div>
     <div th:if="${cuochi != null}">
-	<ul>
-		<li th:each="cuoco : ${cuochi}">
-			<a th:href="@{'/cuoco' + '/' + ${cuoco.id}}"
-				th:text="${cuoco.name}+' '+${cuoco.surname} "></a>
-			<a th:href="@{'/loggedIn/deleteCuoco/'+ ${cuoco.id}}">Elimina</a>
 
+	<ul>
+			 <li th:each="cuoco : ${cuochi}"  >
+			  <a th:href="@{'/cuoco' + '/' + ${cuoco.id}}"
+				th:text="${cuoco.name}+' '+${cuoco.surname} "></a>
+			  <a th:href="@{'/loggedIn/deleteCuoco/'+ ${cuoco.id}}">Elimina</a>
+		   </div>
 		</li>
 	</ul>
 	</div>

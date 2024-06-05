@@ -11,9 +11,12 @@
   <header class="header">
     <nav class="nav">
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Ricette</a></li>
-        <li><a href="#">Cuochi</a></li>
+	   <li><img src="/images/logoIndex.jpg" alt="Logo"></li>
+
+        <li><a href="/success">Home</a></li>
+        <li><a href="/ricette/categoria">Ricette</a></li>
+        <li><a href="/loggedIn/ingredienti">Ingredienti</a></li>
+        <li><a href="/loggedIn/cuochi">Cuochi</a></li>
       </ul>
     </nav>
     <div class="cta">
@@ -21,10 +24,10 @@
 	     <span th:text="${userDetails.username}"></span>
          <a href="logout" class="button">Logout</a>
 	  </div>
-	  <div th:unless="${user}">
-         <a href="login" class="button">Login</a>
      </div>
   </header>
+  
+  
   
   
   <div class="hero">

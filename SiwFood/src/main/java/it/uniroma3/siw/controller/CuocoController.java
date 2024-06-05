@@ -81,9 +81,11 @@ public class CuocoController {
     	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 		User cuoco = new User();
-		cuoco.setCredentials(credentials);
+		//cuoco.setCredentials(new Credentials());
 		
         model.addAttribute("cuoco", cuoco);
+        model.addAttribute("credentials",new Credentials());
+
 //        model.addAttribute("username",credentialsService.getCredentials(userDetails.getUsername()));
 //        model.addAttribute("password",credentialsService.getCredentials(userDetails.getPassword()));
 
@@ -97,8 +99,10 @@ public class CuocoController {
 
     }
 
-    @PostMapping("/loggedIn/cuoco")
-    public String addCuoco(@Valid @ModelAttribute User cuoco, BindingResult bindingResult, 
+    @PostMapping("/formAddCuoco")
+    public String addCuoco(@Valid @ModelAttribute User cuoco, 
+    	                   	@Valid @ModelAttribute Credentials credentials,
+    	                    	BindingResult bindingResult, 
                              @RequestParam Map<String, String> requestParams, 
                              RedirectAttributes redirectAttributes) {
     	
@@ -106,20 +110,24 @@ public class CuocoController {
 	            return "admin/addCuochi.html";
 			}
         
+        // Verifica se le credenziali sono null e istanzialele se necessario
+            cuoco.setCredentials(credentials);
+        
 
-	    String encodedPassword = passwordEncoder.encode(cuoco.getCredentials().getPassword());
-	    cuoco.getCredentials().setPassword(encodedPassword);
+	  //  String encodedPassword = passwordEncoder.encode(cuoco.getCredentials().getPassword());
+	  //  cuoco.getCredentials().setPassword(encodedPassword);
 
         // Imposta il ruolo predefinito per il nuovo utente
         cuoco.getCredentials().setRole(Credentials.DEFAULT_ROLE);
 
         // Salva il nuovo utente nel database
         userService.saveUser(cuoco);
+        credentialsService.saveCredentials(credentials);
 
         // Aggiungi un messaggio di successo per l'utente
         redirectAttributes.addFlashAttribute("successMessage", "Utente creato con successo!");
 
-        return "redirect:/loggedIn/cuoco";
+        return "redirect:/loggedIn/cuochi";
     }
 
 

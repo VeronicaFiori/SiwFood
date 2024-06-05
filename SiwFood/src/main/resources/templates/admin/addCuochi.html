@@ -20,7 +20,7 @@
 	</header>
 
 	<h1>Aggiungi un nuovo cuoco</h1>
-	<form th:action="@{'/loggedIn/cuoco'}" method="POST" th:object="${cuoco}">
+	<form th:action="@{'/formAddCuoco'}" method="POST" th:object="${cuoco}">
 		<div th:if="${#fields.hasGlobalErrors()}">
   			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
   		</div>
@@ -31,7 +31,7 @@
 		    </div>
 			<!--<div>
 			    <label>Ingredienti:</label>
-			    <span><input type="text" th:field="${cuoco.nome}"  required /></span>
+			    <span><input type="text" th:field="${user.nome}"  required /></span>
 			    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">  </span>
 		    </div> -->
             <div>
@@ -39,10 +39,10 @@
 			    <input type="text" th:field="${cuoco.surname}"  required /> </span>
 			    <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">  </span>
 		    </div>
-		    <div>
-			<label>Data di nascita:</label> <span><input type="date" th:field="${cuoco.dataNascita}" /></span>
+		<!--    <div>
+			<label>Data di nascita:</label> <span><input type="date" th:field="${user.dataNascita}" /></span>
 			<span th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}">  </span>
-			</div>
+			</div>-->
 			<div>
 			<label>Email:</label> <span><input type="email" th:field="${cuoco.email}" /></span>
 			<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">  </span>
@@ -50,20 +50,20 @@
 			
 			<h2>Credenziali</h2>
 			<div>
-			<label>Username:</label> <span><input type="text" th:field="${cuoco.credentials.username}" /></span>
+			<label>Username:</label> <span><input type="text" th:field="${credentials.username}" /></span>
 			<span th:if="${#fields.hasErrors('credentials.username')}" th:errors="*{credentials.username}">  </span>
 			</div>
 			<div>
-			<label>Password:</label> <span><input type="password" th:field="${cuoco.credentials.password}" /></span>
-			<span th:if="${#fields.hasErrors('cuoco.credentials.password')}" th:errors="*{cuoco.credentials.password}">  </span>
+			<label>Password:</label> <span><input type="password" th:field="${credentials.password}" /></span>
+			<span th:if="${#fields.hasErrors('credentials.password')}" th:errors="*{user.credentials.password}">  </span>
 			</div>
 
-
+           <div>
+            <button type="submit">Aggiungi Cuoco</button>
+        </div>
 	</form>
 
-        <div>
-            <button type="submit">Aggiungi cuoco</button>
-        </div>
+        
 </body>
 
 </html>

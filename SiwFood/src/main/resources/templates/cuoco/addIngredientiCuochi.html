@@ -3,49 +3,61 @@
 
 <head>
 	<title>
-		SiwFood - Login
+		AddIngredienti
 	</title>
-	<link rel="stylesheet" href="/css/stile.css" />
-</head>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+     <link rel="stylesheet" href="/css/ricette.css">
+     <link rel="stylesheet" href="/css/index.css"></head>
 
 <body>
-	<header>
-		<div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout">Logout</a>
-		</di-v>
-		<div th:unless="${user}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
+    <header class="header">
+        <nav class="nav">
+            <ul>
+				<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
+                <li><a href="/success">Home</a></li>
+                <li><a href="/ricette/categoria">Ricette</a></li>
+                <li><a href="/cuochi">Cuochi</a></li>
+            </ul>
+        </nav>
+        <div class="cta">
+           <div th:if="${userDetails}">
+			 <span th:text="${userDetails.username}"></span>
+			 <a href="/logout" class="button">Logout</a>
+		   </div>
+		   <div th:unless="${userDetails}">
+             <a href="login" class="button">Login</a>
+		   </div>
+        </div>
+    </header>
 
+<div class="container">
+        <h1 class="text-center my-4">Aggiungi un ingrediente</h1>
 
-	<h1>Aggiungi un ingrediente</h1>
-	<!-- Visualizza il messaggio di successo se presente -->
-    <div th:if="${success}" style="color: green;">
-        <p th:text="${success}"></p>
-    
-    </div><!-- Visualizza il messaggio di errore se presente -->
-    <div th:if="${error}" style="color: red;">
-        <p th:text="${error}"></p>
+        <!-- Visualizza il messaggio di successo se presente -->
+        <div th:if="${success}" style="color: green;">
+            <p th:text="${success}"></p>
+        </div>
+        <!-- Visualizza il messaggio di errore se presente -->
+        <div th:if="${error}" style="color: red;">
+            <p th:text="${error}"></p>
+        </div>
+
+        <form th:action="@{/loggedIn/ingredienti}" method="POST" th:object="${ingrediente}">
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+            </div>
+
+            <div class="form-group">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" class="form-control" id="nome" th:field="${ingrediente.nome}" required />
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+            </div>
+
+            <div class="text-center my-4">
+                <button type="submit" class="btn btn-primary">Aggiungi</button>
+            </div>
+        </form>
     </div>
-	<form th:action="@{/loggedIn/ingredienti}" method="POST" th:object="${ingrediente}">
-		<div th:if="${#fields.hasGlobalErrors()}">
-  			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
-  		</div>
-		    <div>
-			    <label>Nome:</label>
-			    <span><input type="text" th:field="${ingrediente.nome}"  required /></span>
-			    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">  </span>
-		    </div>
-		    
-	     <div>
-				<span><button type="submit">Aggiungi</button></span>
-				
-			</div>
-	</form>
-	
-	
 </body>
 
 </html>

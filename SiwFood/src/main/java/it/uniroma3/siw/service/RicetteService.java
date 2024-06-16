@@ -4,7 +4,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.uniroma3.siw.model.Ingrediente;
 import it.uniroma3.siw.model.Ricette;
+import it.uniroma3.siw.repository.IngredienteRepository;
 import it.uniroma3.siw.repository.RicetteRepository;
 
 
@@ -15,6 +17,8 @@ public class RicetteService {
 
 	@Autowired
 	private RicetteRepository ricetteRepository;
+	@Autowired
+	private IngredienteRepository ingredienteRepository;
 
 	public Ricette findById(Long id) {
 		return ricetteRepository.findById(id).get();
@@ -55,4 +59,14 @@ public class RicetteService {
     public List<Ricette> findByCategoria(String categoria) {
         return ricetteRepository.findByCategoria(categoria);
     }
+    
+    
+    /*PROVA*/
+//    public Ingrediente getIngrediente(Long id) {
+//        return ingredienteRepository.findById(id).orElse(null);
+//    }
+
+//    public List<Ingrediente> findAllIngredienti() {
+//        return (List<Ingrediente>) ingredienteRepository.findAll();
+//    }
 }

@@ -3,28 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/manage.css">
-    <title>Homepage</title>
+     <link rel="stylesheet" href="/css/index.css">
+
+    <title>Scopri</title>
 </head>
 <body>
 	 <header class="header">
     <nav class="nav">
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Ricette</a></li>
-          <li><a href="#">Cuochi</a></li>
+		<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
+        <li><a href="/success">Home</a></li>
+        <li><a href="/ricette/categoria">Ricette</a></li>
+        <li><a href="/loggedIn/cuochi">Cuochi</a></li>
       
       </ul>
     </nav>
+    
     <div class="cta">
-      <a href="login" class="button">Login</a>
-    </div>
+	  <div th:if="${userDetails}">
+	     <span th:text="${userDetails.username}"></span>
+         <a href="logout" class="button">Logout</a>
+	  </div>
+     </div>
   </header>
 
     <div class="top">
-   <div class="text">
-      <h2 >Benvenuto Chef</h2>
-         <p>descrizione.</p>
-           <p>desc2.</p>       
+   <div class="text-center">
+      <h2 > Supervisiona, aggiungi e apporta modifiche:</h2>      
      </div>
     
    </div>
@@ -36,7 +41,7 @@
       <div class="card-content">
         <h3>Ricette</h3>
           <a th:href="@{'/ricette/categoria'}"
-           th:text="'Modifica le tue Ricette'"></a>
+           th:text="'Gestisci le ricette'"></a>
       </div>
     </div>
     <div class="card">
@@ -44,7 +49,7 @@
       <div class="card-content">
         <h3>Ingredienti</h3>
           <a th:href="@{'/loggedIn/ingredienti'}"
-           th:text="'Modifica gli ingredienti'"></a>
+           th:text="'Gestisci gli ingredienti'"></a>
       
       </div>
     </div>
@@ -53,7 +58,7 @@
       <div class="card-content">
       <h3>Cuochi</h3>
        <a th:href="@{'/loggedIn/cuochi'}"
-           th:text="'Modifica i cuochi'"></a>
+           th:text="'Gestisci gli Chef'"></a>
 
       </div> 
     </div>

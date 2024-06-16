@@ -15,10 +15,10 @@
 
         <li><a href="/success">Home</a></li>
         <li><a href="/ricette/categoria">Ricette</a></li>
-        <li><a href="/loggedIn/ingredienti">Ingredienti</a></li>
         <li><a href="/loggedIn/cuochi">Cuochi</a></li>
       </ul>
     </nav>
+    
     <div class="cta">
 	  <div th:if="${userDetails}">
 	     <span th:text="${userDetails.username}"></span>
@@ -32,10 +32,7 @@
   
   <div class="hero">
     <div class="hero__content">
-      <h1>Portiamo online la tua azienda</h1>
-      <h2>e ti presentiamo al meglio</h2>
-      <p>La prima impressione conta, grazie a un Design e Comunicazione studiata nel dettaglio siamo in grado di ottimizzare la prima impressione della tua azienda.</p>
-     
+      <h1 th:text="'Benvenuto' + ' '+ ${userDetails.username}"> </h1>
     </div>
 		
 		
@@ -45,10 +42,9 @@
   </div>
   
    <div class="description">
-    <h2>ADMIN </h2>
-    <p>ADMIN</p>
+    <h2>Gestisci le ricette, gli ingredienti e gli Chef.</h2>
     
-    <a href="/loggedIn/manage" class="button">Avanti per modificare</a>
+    <a href="/loggedIn/manage" class="button">Gestisci</a>
 
   </div>
 </body>

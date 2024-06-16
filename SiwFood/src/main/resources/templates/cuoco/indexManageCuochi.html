@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/manage.css">
-    <title>Homepage</title>
+    <title>Scopri</title>
+     <link rel="stylesheet" href="/css/ricette.css">
+     <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
 	 <header class="header">
     <nav class="nav">
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Ricette</a></li>
-          <li><a href="#">Cuochi</a></li>
+	    <li><img src="/images/logoIndex.jpg" alt="Logo"></li>
+        <li><a href="/success">Home</a></li>
+        <li><a href="/ricette/categoria">Ricette</a></li>
+          <li><a href="/cuochi">Cuochi</a></li>
       
       </ul>
     </nav>
@@ -26,9 +29,8 @@
 
     <div class="top">
    <div class="text">
-      <h2 >Benvenuto Chef</h2>
-         <p>descrizione.</p>
-           <p>desc2.</p>       
+      <h2>Immergiti e scopri quello che puoi fare!</h2>
+              
      </div>
     
    </div>
@@ -41,7 +43,7 @@
 		  
         <h3>Ricette</h3>
           <a th:href="@{'/ricette/categoria'}"
-           th:text="'Modifica le tue Ricette'">Up! (2000)</a>
+           th:text="'Ricette'">Up! (2000)</a>
       </li>
       </div>
     </div>
@@ -50,7 +52,7 @@
       <div class="card-content">
         <h3>Ingredienti</h3>
           <a th:href="@{'/loggedIn/ingredienti'}"
-           th:text="'Modifica gli ingredienti'">Up! (2000)</a>
+           th:text="'Ingredienti'">Up! (2000)</a>
       </li>
       </div>
     </div>

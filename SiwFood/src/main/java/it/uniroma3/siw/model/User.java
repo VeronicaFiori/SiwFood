@@ -1,6 +1,7 @@
 package it.uniroma3.siw.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,6 +30,8 @@ public class User {
 	private String surname;
 	@NotBlank
 	private String email;
+
+	private LocalDate data ;
 	
 	
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -96,15 +99,19 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+
+	public LocalDate getData() {
+		return data;
+	}
+
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		return result;
+		return Objects.hash(credentials, data, dataNascita, email, id, name, ricette, surname);
 	}
 
 	@Override
@@ -116,23 +123,13 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (surname == null) {
-			if (other.surname != null)
-				return false;
-		} else if (!surname.equals(other.surname))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		return true;
+		return Objects.equals(credentials, other.credentials) && Objects.equals(data, other.data)
+				&& Objects.equals(dataNascita, other.dataNascita) && Objects.equals(email, other.email)
+				&& Objects.equals(id, other.id) && Objects.equals(name, other.name)
+				&& Objects.equals(ricette, other.ricette) && Objects.equals(surname, other.surname);
 	}
 
+
+    
 
 }

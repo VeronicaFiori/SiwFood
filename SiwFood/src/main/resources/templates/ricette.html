@@ -149,6 +149,8 @@
     <title>Ricette</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
      <link rel="stylesheet" href="/css/categoria.css">
+     <link rel="stylesheet" href="/css/index.css">
+
 
 
 </head>
@@ -158,6 +160,8 @@
      <header class="header">
         <nav class="nav">
             <ul>
+				<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
+				
                 <li><a href="/">Home</a></li>
                 <li><a href="/ricette">Ricette</a></li>
                 <li><a href="/cuochi">Cuochi</a></li>
@@ -170,6 +174,14 @@
     
     <div class="container my-5">
         <div class="row">
+			<div class="col-12 mb-4">
+                <div class="card text-bg-dark w-100">
+                    <img src="https://source.unsplash.com/random/400x202" class="card-img" alt="...">
+                    <div class="card-img-overlay">
+                        <a class="text" th:href="@{'/ricette/Antipasti'}">Antipasti</a>
+                    </div>
+                </div>
+            </div>
             <div class="col-12 mb-4">
                 <div class="card text-bg-dark w-100">
                     <img src="https://www.repstatic.it/content/localirep/img/rep-napoli/2018/01/02/153712304-6be334ac-2107-4847-84cb-27eeaaaf14b1.jpg" class="card-img" alt="...">
@@ -186,14 +198,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 mb-4">
-                <div class="card text-bg-dark w-100">
-                    <img src="https://source.unsplash.com/random/400x202" class="card-img" alt="...">
-                    <div class="card-img-overlay">
-                        <a class="text" th:href="@{'/ricette/Antipasti'}">Antipasti</a>
-                    </div>
-                </div>
-            </div>
+            
             <div class="col-12 mb-4">
                 <div class="card text-bg-dark w-100">
                     <img src="https://source.unsplash.com/random/400x203" class="card-img" alt="...">

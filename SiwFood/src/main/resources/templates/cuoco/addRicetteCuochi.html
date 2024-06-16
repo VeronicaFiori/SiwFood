@@ -81,7 +81,7 @@
 -->
 
 
-   <div th:each="ingrediente : ${ingredienti}">
+  <div th:each="ingrediente : ${ingredienti}">
             <label>
                 <input type="checkbox" name="ingredientiIds" th:value="${ingrediente.id}" />
                 <span th:text="${ingrediente.nome}">Nome Ingrediente</span>
@@ -92,6 +92,16 @@
         <div>
             <button type="submit">Aggiungi Ricetta</button>
         </div>
+     
+     
+     
+     
+     
+     
+     
+
+
+        
     </form>
 </body>
 

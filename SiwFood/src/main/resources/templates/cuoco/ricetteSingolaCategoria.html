@@ -6,14 +6,19 @@
     <title>Ricette per Categoria</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/ricette.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
     <header class="header">
         <nav class="nav">
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Ricette</a></li>
-                <li><a href="#">Cuochi</a></li>
+				<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
+                <li><a href="/success">Home</a></li>
+                <li><a href="/ricette/categoria">Ricette</a></li>
+                <li th:if="${userDetails.username=='a'}">
+			       <a href="/loggedIn/cuochi" >Cuochi</a> </li>
+			     <li th:if="${userDetails.username!='a'}">
+			       <a href="/cuochi" >Cuochi</a> </li>
             </ul>
         </nav>
         <div class="cta">
@@ -51,9 +56,8 @@
             </div>
         </div>
         <div class="description">
-		<a href="/loggedIn/addRicetta" class="button">Aggiungi nuove ricette</a>
+			<a href="/addRicetta" class="button">Aggiungi nuove ricette</a>
 
-	  <!--   <a href="/loggedIn/addRicetta/ + ${categoria}" class="button">Aggiungi nuove ricette</a>-->
 	    </div>
 	 
         <!-- Visualizza il messaggio di successo se presente -->

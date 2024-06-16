@@ -45,11 +45,15 @@
     <title>Cuoco</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/ricette.css">
+    <link rel="stylesheet" href="/css/index.css">
+
 </head>
 <body>
     <header class="header">
         <nav class="nav">
             <ul>
+				<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
+				
                 <li><a href="/">Home</a></li>
                 <li><a href="/ricette">Ricette</a></li>
                 <li><a href="/cuochi">Cuochi</a></li>
@@ -75,12 +79,12 @@
          <img src="https://th.bing.com/th/id/R.eacaeaa346d0c77f45805773bc150e4b?rik=7z3rp7H0bEFW0A&riu=http%3a%2f%2f7428.net%2fwp-content%2fuploads%2f2014%2f02%2fCartoon-Chef-Vector.jpg&ehk=01WycGhGY0Q%2bTV8nQzUxK8DO%2bh1sY1lJXZxso1u38%2bg%3d&risl=&pid=ImgRaw&r=0" class="w-100" alt="...">
          </div>
            
-         <div class="col-md-6 p-4 ps-md-0 text-center ">
-           <p> Descrizione:   </p>
+         <div class="col-md-6 p-4 ps-md-0 ">
+           <h5> Descrizione:   </h5>
            <span th:text="${ricetta.descrizione}">2000</span>
            
           <!--CHEF CREATORE-->
-           <div th:if="${ricetta.user != null}" class="row my-3">
+           <div th:if="${ricetta.user != null}" class=" my-3">
                 <h5> Chef creatore di questa ricetta: </h5>
             </div>
             <div class="text-center">
@@ -94,10 +98,10 @@
         </div>
         <div th:unless="${ricetta}">Non ci sono ricette</div>
       </div>
-    </div>
+   
 
-     <h2>Ingredienti</h2>
-        <div th:if="${ingredienti}">
+     <h3 class="text-center my-4">Ingredienti</h3>
+        <div th:if="${ricetta.righeRicetta}">
             <div class="container text-center">
                 <div class="row">
                     <div class="col">
@@ -107,18 +111,20 @@
                         <strong>Quantità</strong>
                     </div>
                 </div>
-                <ul class="list-group ingredienti-list" >
-                    <li class="list-group-item" th:each="ingrediente : ${ingredienti}">
+                <ul class="list-group ingredienti-list">
+                    <li class="list-group-item" th:each="rigaRicetta : ${ricetta.righeRicetta}">
                         <div class="row">
-                            <div class="col" th:text="${ingrediente.nome}">Nome Ingrediente</div>
-                            <div class="col" th:text="${ingrediente.quantita}">Quantità Ingrediente</div>
+                            <div class="col thin-text" th:text="${rigaRicetta.ingrediente.nome}">Nome Ingrediente</div>
+                            <div class="col thin-text" th:text="${rigaRicetta.quantita}">Quantità Ingrediente</div>
                         </div>
                     </li>
                 </ul>
             </div>
         </div>
-        <div th:unless="${ingredienti}">Non ci sono ingredienti</div>
-    </div>
+        </div>
+        <div th:unless="${ricetta.righeRicetta}">Non ci sono ingredienti</div>
+        
+       <div class="description"> </div>
   </body>
 
   

@@ -44,18 +44,27 @@
     <title>Cuoco</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/ricette.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
     <header class="header">
         <nav class="nav">
             <ul>
+				<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
+				
                 <li><a href="/">Home</a></li>
                 <li><a href="/ricette">Ricette</a></li>
                 <li><a href="/cuochi">Cuochi</a></li>
             </ul>
         </nav>
         <div class="cta">
-            <a href="/login" class="button">Login</a>
+           <div th:if="${userDetails}">
+			 <span th:text="${userDetails.username}"></span>
+			 <a href="/logout" class="button">Logout</a>
+		   </div>
+		   <div th:unless="${userDetails}">
+             <a href="/login" class="button">Login</a>
+		   </div>
         </div>
     </header>
 
@@ -65,22 +74,24 @@
 	<div class="container">
        
       
-<div class="row g-0 bg-body-secondary position-relative">
-  <div class="col-md-6 mb-md-0 p-md-4">
-    <img src="https://th.bing.com/th/id/R.eacaeaa346d0c77f45805773bc150e4b?rik=7z3rp7H0bEFW0A&riu=http%3a%2f%2f7428.net%2fwp-content%2fuploads%2f2014%2f02%2fCartoon-Chef-Vector.jpg&ehk=01WycGhGY0Q%2bTV8nQzUxK8DO%2bh1sY1lJXZxso1u38%2bg%3d&risl=&pid=ImgRaw&r=0" class="w-100" alt="...">
-  </div>
-  <div class="col-md-6 p-4 ps-md-0 text-center ">
-        <p> Dati Chef:   </p>
-
-       <div th:if="${cuoco}">
-            <span th:text="${cuoco.email} "></span>
-       </div>
+    <div class="row g-0 bg-body-secondary position-relative">
+      <div class="col-md-6 mb-md-0 p-md-4">
+      <img src="https://th.bing.com/th/id/R.eacaeaa346d0c77f45805773bc150e4b?rik=7z3rp7H0bEFW0A&riu=http%3a%2f%2f7428.net%2fwp-content%2fuploads%2f2014%2f02%2fCartoon-Chef-Vector.jpg&ehk=01WycGhGY0Q%2bTV8nQzUxK8DO%2bh1sY1lJXZxso1u38%2bg%3d&risl=&pid=ImgRaw&r=0" class="w-100" alt="...">
+    </div>
+    <div class="col-md-6 p-4 ps-md-0 thin-text ">
+        <h3> Informazioni sulla Chef:   </h3>
+         <div th:if="${cuoco}">
+           <h5 class="my-4"> Email:   </h5>
+             <a class="list-group-item list-group-item-action list-group-item-info" th:text="${cuoco.email}" >A simple info list group item</a>
+           <h5 class="my-4"> Data di nascita:   </h5>
+             <a class="list-group-item list-group-item-action list-group-item-info" th:text="${cuoco.data}" >A simple info list group item</a>
+         </div>
        <div th:unless="${cuoco}">Non ci sono dati di questo cuoco</div>    
-  </div>
-</div>
+      </div>
+     </div>
 
         
-     <h2>Le sue ricette:</h2> 
+     <h3 class="text-center my-4">Le sue ricette:</h3>
             
       <div th:if="${ricette == null or #lists.isEmpty(ricette) }">Non ci sono ricette associate a questo cuoco</div>
       
@@ -94,6 +105,8 @@
             </li>
         </ul>
       </div>
+      <div class="description"> </div>
+
   </body>
   
   

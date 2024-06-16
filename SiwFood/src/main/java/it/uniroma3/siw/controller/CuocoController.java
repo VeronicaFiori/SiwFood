@@ -47,7 +47,10 @@ public class CuocoController {
 	/*GESTIONE PER USER NON REGISTRATI */
 	@GetMapping("/cuochi")
 	public String getCuochi(Model model) {		
-		model.addAttribute("cuochi", this.userRepository.findAll());
+		/*stampo solo i cuochi e non l'admin*/
+		List<User> cuochi = userRepository.findByRole(Credentials.DEFAULT_ROLE);
+	    model.addAttribute("cuochi", cuochi);
+		//model.addAttribute("cuochi", this.userRepository.findAll());
 		return "cuochi.html";
 
 	}
@@ -63,7 +66,9 @@ public class CuocoController {
 	/*ADMIN */
 	@GetMapping("/loggedIn/cuochi")
 	public String getCuochiLoggedIn(Model model) {		
-		model.addAttribute("cuochi", this.userRepository.findAll());
+		List<User> cuochi = userRepository.findByRole(Credentials.DEFAULT_ROLE);
+	    model.addAttribute("cuochi", cuochi);
+		//model.addAttribute("cuochi", this.userRepository.findAll());
 		return "/admin/cuochi.html";
 	}
 	
@@ -85,6 +90,7 @@ public class CuocoController {
 		
         model.addAttribute("cuoco", cuoco);
         model.addAttribute("credentials",new Credentials());
+        
 
 //        model.addAttribute("username",credentialsService.getCredentials(userDetails.getUsername()));
 //        model.addAttribute("password",credentialsService.getCredentials(userDetails.getPassword()));
@@ -113,12 +119,10 @@ public class CuocoController {
         // Verifica se le credenziali sono null e istanzialele se necessario
             cuoco.setCredentials(credentials);
         
-
-	  //  String encodedPassword = passwordEncoder.encode(cuoco.getCredentials().getPassword());
-	  //  cuoco.getCredentials().setPassword(encodedPassword);
-
         // Imposta il ruolo predefinito per il nuovo utente
         cuoco.getCredentials().setRole(Credentials.DEFAULT_ROLE);
+
+        credentials.setUser(cuoco);
 
         // Salva il nuovo utente nel database
         userService.saveUser(cuoco);

@@ -4,17 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Box con Immagini</title>
-  <link rel="stylesheet" href="/css/cuoco/ricetteCuoco.css">
-</head>
+  <title>Ingredienti</title>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   <link rel="stylesheet" href="/css/ricette.css">
+   <link rel="stylesheet" href="/css/index.css"></head>
 <body>
 	
 	<header class="header">
     <nav class="nav">
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Ricette</a></li>
-        <li><a href="#">Cuochi</a></li>
+        <li><img src="/images/logoIndex.jpg" alt="Logo"></li>
+
+        <li><a href="/success">Home</a></li>
+        <li><a href="/ricette/categoria">Ricette</a></li>
+        <li><a href="/loggedIn/ingredienti">Ingredienti</a></li>
+        <li><a href="/loggedIn/cuochi">Cuochi</a></li>
       </ul>
     </nav>
     <div class="cta">
@@ -22,24 +26,36 @@
 	     <span th:text="${userDetails.username}"></span>
          <a href="logout" class="button">Logout</a>
 	  </div>
-	  <div th:unless="${user}">
+	  <div th:unless="${userDetails}">
          <a href="login" class="button">Login</a>
      </div>
   </header>
-  
-  <!--<div id="flex-container">
-    <div class="col-container">
-      <div class="col">
-        <img src="https://i.pinimg.com/originals/dc/41/93/dc4193eafa7d63600d5369abb69d08fa.jpg" alt="Lavoro 1">
-        <h3>Lavoro 1<br>Mario Rossi</h3>
-      </div>
-    </div>-->
-
-
-    
-	<h1>Ingredenti</h1>
+ 
 	
-	<div th:if="${ingrediente==null }">Non ci sono ingredienti nel sistema</div>
+  <h1 class="text-center" th:text="Ingredienti"></h1>
+    <div class="container">
+      <div th:if="${ingrediente == null || ingrediente.isEmpty()}">Non ci sono ingredienti nel sistema</div>
+      <ul class="list-group">
+        <li th:each="ingrediente : ${ingrediente}" class="list-group-item d-flex justify-content-between">
+            <span th:text="${ingrediente.nome}"></span>
+            <a th:href="@{'/loggedIn/deleteIngrediente/' + ${ingrediente.id}}" class="btn btn-danger btn-sm">Elimina</a>
+        </li>
+       </ul>
+    </div>
+
+
+
+	 
+	 <div class="description">
+        <a href="/loggedIn/addIngredienti" class="button">Aggiungi nuovi ingredienti</a>
+       
+        <!-- Visualizza il messaggio di successo se presente -->
+         <div th:if="${success}" style="color: green;">
+          <p th:text="${success}"></p>
+        </div>
+    </div>
+	
+<!--	<div th:if="${ingrediente==null }">Non ci sono ingredienti nel sistema</div>
     
 	<ul>
 		<li th:each="ingrediente : ${ingrediente}">
@@ -50,7 +66,7 @@
 	</ul>
 	</div>
 	    <!-- Visualizza il messaggio di successo se presente -->
-    <div th:if="${success}" style="color: green;">
+ <!--   <div th:if="${success}" style="color: green;">
         <p th:text="${success}"></p>
     </div>
 
@@ -59,7 +75,7 @@
         <a href="/loggedIn/addIngredienti" class="button">Aggiungi nuovi ingredienti</a>
        
 
-     </div>
+     </div> -->
 </body>
 
 </html>

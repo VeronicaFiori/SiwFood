@@ -35,9 +35,24 @@ public class IngredienteService {
         return ingredienteRepository.findById(id).orElse(null);
     }
 
-    public List<Ingrediente> getIngredientiByRicetta(Ricette ricetta) {
-        // Supponiamo che ci sia un metodo nel repository per ottenere gli ingredienti per una determinata ricetta
-        return ingredienteRepository.findByRicetta(ricetta);
+    
+//    public List<Ingrediente> findByRicetta(Ricette ricetta) {
+//        return ingredienteRepository.findByRicetta(ricetta);
+//    }
+//    
+    
+    
+//    public List<Ingrediente> findIngredientiNotInRicetta(Ricette ricetta) {
+//        return ingredienteRepository.findIngredientiNotInRicetta(ricetta.getId());
+//    }
+    
+    
+    
+    
+    
+    public List<Ingrediente> getAllIngredienti() {
+        return (List<Ingrediente>) ingredienteRepository.findAll();
     }
 }
+
 

@@ -48,7 +48,7 @@
 		<li th:each="ricetta : ${ricette}">
 			<a th:href="@{'/loggedIn/ricetta' + '/' + ${ricetta.id}}"
 				th:text="${ricetta.nome} "></a>
-			            <a th:href="@{'/loggedIn/deleteRicetta/'+ ${ricetta.id}}">Elimina</a>
+			            <a th:href="@{'/loggedIn/deleteRicetta/'+ ${ricetta.id} + ${ricetta.categoria}}">Elimina</a>
 
 		</li>
 	</ul>

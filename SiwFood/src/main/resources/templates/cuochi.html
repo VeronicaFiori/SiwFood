@@ -8,12 +8,16 @@
     <title>Ricette</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/ricette.css">
+    <link rel="stylesheet" href="/css/index.css">
+
 
 </head>
 <body>
 	 <header class="header">
     <nav class="nav">
       <ul>
+	    <li><img src="/images/logoIndex.jpg" alt="Logo"></li>
+
         <li><a href="/">Home</a></li>
         <li><a href="/ricette">Ricette</a></li>
           <li><a href="/cuochi">Cuochi</a></li>
@@ -21,7 +25,13 @@
       </ul>
     </nav>
     <div class="cta">
-      <a href="login" class="button">Login</a>
+      <div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
+			<a href="/logout" class="button">Logout</a>
+		</div>
+		<div th:unless="${userDetails}">
+             <a href="login" class="button">Login</a>
+		</div>
     </div>
   </header>
 
@@ -42,6 +52,8 @@
             </div>
         </div>
     </div>
+    
+
     
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

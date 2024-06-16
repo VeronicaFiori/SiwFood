@@ -26,6 +26,8 @@ body {
   padding: 0;
   display: flex;
   gap: 20px;
+  align-items: center;
+
 }
 
 .nav ul li {

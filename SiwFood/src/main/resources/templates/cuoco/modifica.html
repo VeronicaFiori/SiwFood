@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,66 +9,84 @@
 </head>
 <body>
     <h1>Modifica Ricetta</h1>
-ricette/categoria
+
     <form th:action="@{'/loggedIn/ricetta/modifica/' + ${ricetta.id}}" th:object="${ricetta}" method="post">
-           <div>
-			    <label>Nome:</label>
-			    <span><input type="text" th:field="${ricetta.nome}"  required /></span>
-			    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">  </span>
-		    </div>
-           <div>
-			    <label>Descrizione:</label>
-			    <span><textarea type="text" th:field="${ricetta.descrizione}"  required /></textarea>
-			    <span th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}">  </span>
-		    </div>
+        <div>
+            <label>Nome:</label>
+            <input type="text" th:field="${ricetta.nome}" required />
+            <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+        </div>
+        <div>
+            <label>Descrizione:</label>
+            <textarea th:field="${ricetta.descrizione}" required></textarea>
+            <span th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}"></span>
+        </div>
 
-      <h2>Ingredienti</h2>
-     
-      <!--se è vuota aggiungo nuovi ingredienti-->
- <!--      <div th:if="${ingrediente==null || ingrediente.isEmpty()}">
-		     <div>
-			  <h1>Aggiungi un nuovo ingrediente</h1>
-	            <form th:action="@{'/cuoco/ricettaCuoco'}" method="POST" th:object="${ingrediente}">
-		          <div th:if="${#fields.hasGlobalErrors()}">
-  			        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
-  		          </div>
-		          <div>
-			        <label>Nome:</label>
-			          <span><input type="text" th:field="${ingrediente.nome}"   /></span>
-			          <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">  </span>
-		           </div>
-                   <div>
-			        <label>Quantita':</label>
-			          <span><input type="text" th:field="${ingrediente.quantita}"   /></span>
-			          <span th:if="${#fields.hasErrors('quantita')}" th:errors="*{quantita}">  </span>
-		           </div>
-                   <div>
-				     <span><button type="submit">Aggiungi</button></span>
-			       </div>
-		         </div>
-		 </div>
-    
-    <!--altrimenti posso modificare-->
-  <!---     <div th:unless="${ingrediente==null || ingrediente.isEmpty()}">
-
-        <div th:each="ingrediente, stat : *{ingredienti}">
-            <div>
-                <label>Nome:</label>
-                <span><input type="text" th:field="*{ingredienti[__${stat.index}__].nome}" required /></span>
-                <span th:if="${#fields.hasErrors('ingredienti[__${stat.index}__].nome')}" th:errors="*{ingredienti[__${stat.index}__].nome}">  </span>
-            </div>
-            <div>
-                <label>Quantita:</label>
-                <span><input type="text" th:field="*{ingredienti[__${stat.index}__].quantita}" required /></span>
-                <span th:if="${#fields.hasErrors('ingredienti[__${stat.index}__].quantita')}" th:errors="*{ingredienti[__${stat.index}__].quantita}">  </span>
+        <!-- Sezione per gestire gli ingredienti -->
+        <h2 class="text-center my-4">Ingredienti della Ricetta</h2>
+        <div id="ingredienti-section" class="scrollable-container">
+            <div th:each="rigaRicetta, rigaIndex : ${ricetta.righeRicetta}" class="row align-items-center mb-2 ingredienti-group">
+                <div class="col-md-7">
+                    <select class="form-control" name="ingredientiIds">
+                        <option th:each="ing : ${ingredienti}" th:value="${ing.id}" th:text="${ing.nome}" th:selected="${ing.id == rigaRicetta.ingrediente.id}"></option>
+                    </select>
+                </div>
+                <div class="col-3 p-1">
+                    <input type="text" class="form-control" name="quantita" th:value="${rigaRicetta.quantita}" placeholder="Quantità" required />
+                </div>
+                <div class="col-1 p-0">
+                    <button type="button" class="btn btn-danger remove-ingrediente">Rimuovi</button>
+                </div>
             </div>
         </div>
+
+        <!-- Template per aggiungere un nuovo ingrediente -->
+        <template id="ingredient-template">
+            <div class="row align-items-center mb-2 ingredienti-group">
+                <div class="col-md-7">
+                    <select class="form-control" name="ingredientiIds" required>
+                        <option th:each="ing : ${ingredienti}" th:value="${ing.id}" th:text="${ing.nome}"></option>
+                    </select>
+                </div>
+                <div class="col-3 p-1">
+                    <input type="text" class="form-control" name="quantita" placeholder="Quantità" required />
+                </div>
+                <div class="col-1 p-0">
+                    <button type="button" class="btn btn-danger remove-ingrediente">Rimuovi</button>
+                </div>
+            </div>
+        </template>
+
+        <!-- Pulsante per aggiungere un nuovo ingrediente -->
+        <div class="d-flex justify-content-center my-4">
+            <button type="button" class="btn btn-primary" id="add-ingrediente">Aggiungi Ingrediente</button>
         </div>
-   -->
 
         <div>
-            <button type="submit">Salva Modifiche</button>
+            <button type="submit" class="btn btn-primary">Salva Modifiche</button>
         </div>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const addButton = document.getElementById('add-ingrediente');
+            const ingredientiSection = document.getElementById('ingredienti-section');
+            const ingredientTemplate = document.getElementById('ingredient-template').content;
+
+            addButton.addEventListener('click', function () {
+                const clone = document.importNode(ingredientTemplate, true);
+                ingredientiSection.appendChild(clone);
+            });
+
+            ingredientiSection.addEventListener('click', function (event) {
+                if (event.target.closest('.remove-ingrediente')) {
+                    const row = event.target.closest('.ingredienti-group');
+                    if (row) {
+                        row.remove();
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

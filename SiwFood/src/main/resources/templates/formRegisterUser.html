@@ -6,18 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Ricette</title>
+    <title>Registrati</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/ricette.css">
+
 
 </head>
 <body>
 	 <header class="header">
     <nav class="nav">
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Ricette</a></li>
-          <li><a href="#">Cuochi</a></li>
+		<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/ricette">Ricette</a></li>
+          <li><a href="/cuochi">Cuochi</a></li>
       
       </ul>
     </nav>
@@ -38,6 +41,10 @@
                 <label for="surname" class="form-label my-3">Cognome</label>
                 <input type="text" class="form-control" id="surname" placeholder="cognome" required th:field="${user.surname}" />
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('user.surname')}" th:errors="${user.surname}"></div>
+                
+                 <label for="surname" class="form-label my-3">Data di nascita</label>
+                <input type="date" class="form-control" id="data" placeholder="Data di nascita" required th:field="${user.data}" />
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('user.data')}" th:errors="${user.data}"></div>
            
            
                 <label for="email" class="form-label my-3">Email</label>
@@ -59,6 +66,9 @@
                 <span th:if="${#fields.hasErrors('credentials.password')}" th:errors="${credentials.password}"
 				th:style="'color:red'"> 
 			   </span>
+			   
+			   <label for="fileImages" class="form-label my-3">Aggiungi una tua foto</label>
+                   <input type="file" class="form-control" id="fileImages" name="fileImages" accept="image/*" multiple onchange="loadFiles(event)">
          
             <div class="col-12 text-center  my-5">
                 <button class="btn btn-primary" type="submit">Registra</button>

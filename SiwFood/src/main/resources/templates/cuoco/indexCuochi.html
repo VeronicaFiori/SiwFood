@@ -11,9 +11,11 @@
   <header class="header">
     <nav class="nav">
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Ricette</a></li>
-        <li><a href="#">Cuochi</a></li>
+		<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
+		
+        <li><a href="/success">Home</a></li>
+        <li><a href="/ricette/categoria">Ricette</a></li>
+        <li><a href="/cuochi">Cuochi</a></li>
       </ul>
     </nav>
     <div class="cta">
@@ -28,10 +30,7 @@
   
   <div class="hero">
     <div class="hero__content">
-      <h1>Portiamo online la tua azienda</h1>
-      <h2>e ti presentiamo al meglio</h2>
-      <p>La prima impressione conta, grazie a un Design e Comunicazione studiata nel dettaglio siamo in grado di ottimizzare la prima impressione della tua azienda.</p>
-     
+      <h1 th:text="'Benvenuto Chef' + ' '+ ${userDetails.username}"> </h1>
     </div>
 		
 		
@@ -41,8 +40,8 @@
   </div>
   
    <div class="description">
-    <h2>Chef scopri di piu'!</h2>
-    <p>Salve chef qui puoi controllare e modificare le tue ricette</p>
+    <h2>Leggi, condividi e crea le tue ricette preferite!</h2>
+     <p> Inoltre ccontrolla gli ingredienti necessari. Se manca qualcosa, aggiungilo tu stesso</p>
     
     <a href="/loggedIn/manage" class="button">SCOPRI COME</a>
 

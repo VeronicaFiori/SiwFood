@@ -1,37 +1,43 @@
 package it.uniroma3.siw.model;
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 
 @Entity
-public class RicettaIngrediente {
-    @EmbeddedId
-    private RicettaIngredienteId id = new RicettaIngredienteId();
+public class RigaRicetta {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String quantita;
 
     @ManyToOne
-    @MapsId("ricettaId")
     @JoinColumn(name = "ricetta_id")
     private Ricette ricetta;
 
     @ManyToOne
-    @MapsId("ingredienteId")
     @JoinColumn(name = "ingrediente_id")
     private Ingrediente ingrediente;
 
-    private String quantita;
-
-	
-    
-
-	public RicettaIngredienteId getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(RicettaIngredienteId id) {
+	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getQuantita() {
+		return quantita;
+	}
+
+	public void setQuantita(String quantita) {
+		this.quantita = quantita;
 	}
 
 	public Ricette getRicetta() {
@@ -50,14 +56,6 @@ public class RicettaIngrediente {
 		this.ingrediente = ingrediente;
 	}
 
-	public String getQuantita() {
-		return quantita;
-	}
-
-	public void setQuantita(String quantita) {
-		this.quantita = quantita;
-	}
-
-    // getters and setters
+    // Getters and Setters
     
 }

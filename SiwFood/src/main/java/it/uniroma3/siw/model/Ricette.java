@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -25,7 +27,9 @@ public class Ricette {
 
 	@NotBlank
 	private String nome;
-	@NotBlank
+	@NotBlank	
+    @Column( length = 1000)
+
     private String descrizione;
 	
 	@ManyToOne
@@ -33,15 +37,22 @@ public class Ricette {
 	@NotBlank
 	private String categoria;
 	
-//	@OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL, orphanRemoval = true)
-//	 private Set<RicettaIngrediente> ingredienti = new HashSet<>();
+	@OneToOne
+	Image image;
+	
 
 	
+	
+	public Image getImage() {
+		return image;
+	}
+	public void setImage(Image image) {
+		this.image = image;
+	}
 	@ManyToMany
     private Set<Ingrediente> ingredienti;
 	
 		
-	/********PROVA MODIFICA!!!!!!*/
 	@OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RigaRicetta> righeRicetta;
 	

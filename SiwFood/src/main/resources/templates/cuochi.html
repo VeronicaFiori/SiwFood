@@ -43,7 +43,7 @@
         <div class="row" th:if="${cuochi != null} ">
 			<div class="col-md-4 mb-4" th:each="cuoco : ${cuochi}" >
 				<div class="card" style="width: 18rem;">
-                    <img src="https://th.bing.com/th/id/R.e654816d8aea33d99fa694127f008d1c?rik=Y56MrJlYU3UxYg&pid=ImgRaw&r=0" class="card-img-top" alt="...">
+                    <img th:src="@{'/display/image/' + ${cuoco.image.id}}" class="w-100" alt="...">
                     <div class="card-body text-center">
                         <a  th:href="@{'/cuoco' + '/' + ${cuoco.id}}"
 				            class="card-title" th:text="${cuoco.name}+' '+${cuoco.surname} "></a>
@@ -52,8 +52,6 @@
             </div>
         </div>
     </div>
-    
-
     
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

@@ -45,7 +45,7 @@
         <div class="row" th:unless="${ricette == null || ricette.isEmpty()}">
             <div class="col-md-4 mb-4" th:each="ricetta : ${ricette}">
                 <div class="card" style="width: 18rem;">
-                    <img src="https://th.bing.com/th/id/R.e654816d8aea33d99fa694127f008d1c?rik=Y56MrJlYU3UxYg&pid=ImgRaw&r=0" class="card-img-top" alt="...">
+                    <img th:src="@{'/display/image/' + ${ricetta.image.id}}" class="w-100" alt="...">
                     <div class="card-body text-center">
                         <h5 class="card-title" th:text="${ricetta.nome}">Nome</h5>
                         <a th:href="@{'/loggedIn/ricetta/' + ${ricetta.id}}" class="btn btn-primary" style="background-color: pink;">Guarda</a>

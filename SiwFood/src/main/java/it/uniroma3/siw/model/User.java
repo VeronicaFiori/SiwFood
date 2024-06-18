@@ -33,7 +33,20 @@ public class User {
 
 	private LocalDate data ;
 	
+	@OneToOne
+	Image image;
 	
+	
+	
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Credentials credentials;
 

@@ -1,5 +1,6 @@
 package it.uniroma3.siw.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.model.Ricette;
 import it.uniroma3.siw.model.User;
+import it.uniroma3.siw.repository.ImageRepository;
 import it.uniroma3.siw.repository.RicetteRepository;
 import it.uniroma3.siw.repository.UserRepository;
 import it.uniroma3.siw.service.CredentialsService;
@@ -41,6 +45,8 @@ public class CuocoController {
 	private CredentialsService credentialsService;
 	@Autowired
     private PasswordEncoder passwordEncoder;
+	@Autowired
+    private ImageRepository imageRepository;
 
 
 	
@@ -57,9 +63,12 @@ public class CuocoController {
 	
 	@GetMapping("/cuoco/{id}")
 	public String getCuoco(@PathVariable("id") Long id, Model model) {
+		
 		model.addAttribute("cuoco", this.userRepository.findById(id).get());
 		List<Ricette> ricette = ricetteService.getRicetteByCuocoId(id);
         model.addAttribute("ricette", ricette);
+      
+		
 		return "cuoco.html";
 	}
 	
@@ -110,14 +119,19 @@ public class CuocoController {
     	                   	@Valid @ModelAttribute Credentials credentials,
     	                    	BindingResult bindingResult, 
                              @RequestParam Map<String, String> requestParams, 
-                             RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes,
+                             @RequestParam("file") MultipartFile image) throws IOException {
     	
         if (bindingResult.hasErrors()) {
 	            return "admin/addCuochi.html";
 			}
         
+        Image img = new Image(image.getBytes());
+        this.imageRepository.save(img);
+        cuoco.setImage(img);
+        
         // Verifica se le credenziali sono null e istanzialele se necessario
-            cuoco.setCredentials(credentials);
+        cuoco.setCredentials(credentials);
         
         // Imposta il ruolo predefinito per il nuovo utente
         cuoco.getCredentials().setRole(Credentials.DEFAULT_ROLE);

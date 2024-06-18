@@ -19,7 +19,7 @@
                 <li><img src="/images/logoIndex.jpg" alt="Logo"></li>
                 <li><a href="/success">Home</a></li>
                 <li><a href="/ricette/categoria">Ricette</a></li>
-                <li><a href="/cuochi">Cuochi</a></li>
+                <li><a href="/loggedIn/cuochi">Cuochi</a></li>
             </ul>
         </nav>
         <div class="cta">
@@ -35,7 +35,7 @@
 
     <div class="container">
         <h1 class="text-center my-4">Aggiungi una ricetta</h1>
-        <form th:action="@{'/addRicettaCategoria'}" method="POST" th:object="${ricetta}">
+        <form th:action="@{'/addRicettaCategoria'}" method="POST" th:object="${ricetta}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="nome" class="form-label">Nome:</label>
                 <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Nome" required />
@@ -56,12 +56,12 @@
             </div>
             <div class="form-group">
                 <label for="user" class="form-label">Chef:</label>
-                <select class="form-select" th:field="${ricetta.user.id}" id="user" name="userId" required>
+                <select class="form-control" th:field="${ricetta.user.id}" id="user" name="userId" required>
                     <option value="" selected>Scegli lo Chef:</option>
                     <option th:each="cuoco : ${cuochi}" th:value="${cuoco.id}" th:text="${cuoco.name + ' ' + cuoco.surname}"></option>
                 </select>
             </div>
-            <h2 class="text-center my-4">Aggiungi Ingrediente alla Ricetta</h2>
+            <h2 class="text-center my-4">Aggiungi gli ingrediente alla ricetta</h2>
             <div id="ingredienti-section" class="scrollable-container">
                 <div th:each="rigaRicetta : ${ricetta.righeRicetta}" class="row align-items-center mb-2 ingredienti-group">
                     <div class="col-md-7">
@@ -98,9 +98,17 @@
             <div class="d-flex justify-content-center my-4">
                 <a href="/loggedIn/addIngredienti" class="text-primary mb-3">Non trovi l'ingrediente che cerchi? Aggiungilo qui!</a>
             </div>
+            
+             <h2 class="text-center my-4">Aggiungi una foto della ricetta</h2>
+
+            <div>
+              <label for="file" class="form-label my-4">Scegli:</label>
+              <span><input required class="form-control" type="file" name="file" ></span>
+            </div>
             <div class="text-center my-4">
                 <button type="submit" class="btn btn-primary">Aggiungi Ricetta</button>
             </div>
+            
         </form>
     </div>
 

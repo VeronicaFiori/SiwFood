@@ -2,10 +2,12 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/manage.css">
-        <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/index.css">
 
-    <title>Homepage</title>
+    <title>Scopri</title>
 </head>
 <body>
 	 <header class="header">
@@ -15,16 +17,21 @@
 
         <li><a href="/">Home</a></li>
         <li><a href="/ricette">Ricette</a></li>
-          <li><a href="/cuochi">Cuochi</a></li>
-      
+        <li><a href="/cuochi">Cuochi</a></li>
       </ul>
     </nav>
     <div class="cta">
-      <a href="login" class="button">Login</a>
+           <div th:if="${userDetails}">
+			 <span th:text="${userDetails.username}"></span>
+			 <a href="/logout" class="button">Logout</a>
+		   </div>
+		   <div th:unless="${userDetails}">
+             <a href="/login" class="button">Login</a>
+		   </div>
     </div>
   </header>
 
-    <div class="top text-center">
+  <div class="top text-center">
    <div class="text-center">
       <h2>Che tu sia un cuoco esperto o un principiante in cucina, troverai qualcosa che soddisfi il tuo palato!</h2>
                 

@@ -16,7 +16,7 @@
             <ul>
 				<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
                 <li><a href="/success">Home</a></li>
-                <li><a href="/ricette/categoria">Ricette</a></li>
+                <li><a href="/ricette">Ricette</a></li>
                 <li><a href="/cuochi">Cuochi</a></li>
             </ul>
         </nav>
@@ -26,7 +26,7 @@
 			 <a href="/logout" class="button">Logout</a>
 		   </div>
 		   <div th:unless="${userDetails}">
-             <a href="login" class="button">Login</a>
+             <a href="/login" class="button">Login</a>
 		   </div>
         </div>
     </header>
@@ -71,7 +71,7 @@
                         <strong>Ingrediente</strong>
                     </div>
                     <div class="col">
-                        <strong>Quantità</strong>
+                        <strong>Quantit&agrave;</strong>
                     </div>
                 </div>
                 <ul class="list-group ingredienti-list">
@@ -84,98 +84,21 @@
                 </ul>
             </div>
         </div>
-       </div>
 
         <div th:unless="${ricetta.righeRicetta}">Non ci sono ingredienti</div>
         
          
         <div class="description">
-        <a th:if="${currentUsername == ricetta.user?.credentials?.username}"
-           th:href="@{'/loggedIn/ricetta/modifica/' + ${ricetta.id}}" 
-           class="button">Modifica</a>
-    </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        
- <!--       <h2>Ingredienti</h2>
-    <div th:if="${ricetta.ingredienti}">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col">
-                    <strong>Ingrediente</strong>
-                </div>
-                <div class="col">
-                    <strong>Quantità</strong>
-                </div>
-            </div>
-            <ul class="list-group ingredienti-list">
-                <li class="list-group-item" th:each="ricettaIngrediente : ${ricetta.ingredienti}">
-                    <div class="row">
-                        <div class="col" th:text="${ricettaIngrediente.nome}">Nome Ingrediente</div>
-                        <div class="col" th:text="${ricettaIngrediente.quantita}">Quantità Ingrediente</div>
-                    </div>
-                </li>
-            </ul>
+            <a  th:if="${currentUsername == ricetta.user?.credentials?.username}"
+                th:href="@{'/ricetta/modifica/' + ${ricetta.id}}" 
+                class="button">Modifica</a>
         </div>
-    </div>
-    <div th:unless="${ricetta.ingredienti}">Non ci sono ingredienti</div>
-    
-    <div class="description">
-        <a th:if="${currentUsername == ricetta.user?.credentials?.username}"
-           th:href="@{'/loggedIn/ricetta/modifica/' + ${ricetta.id}}" 
-           class="button">Modifica</a>
-    </div>
-   </div>-->
+        <div class="description">
+             <a th:if="${currentUsername == ricetta.user?.credentials?.username}"
+                th:href="@{'/deleteRicetta/'+ ${ricetta.id} + '/' + ${categoria}}"  
+                class=" buttondanger text-center "  >Elimina</a> 
+         </div>
 
-  </body>
-
-  
+  </body>  
 </html>
   
-  
-  
-  
-<!--  
- <body>
-    <h1 th:text="${ricetta.nome}"> </h1>
-    <div th:if="${ricetta}">
-        <span th:text="${ricetta.descrizione}">Descrizione della ricetta</span>
-    </div>
-    <div th:unless="${ricetta}">Non ci sono ricette</div>
-    
-  <!--  <h2>Ingredienti</h2>
-    <div th:if="${ingredientiQuantita != null && !ingredientiQuantita.isEmpty()}">
-        <ul>
-            <li th:each="ricettaIngrediente : ${ingredientiQuantita}">
-                <span th:text="${ricettaIngrediente.ingrediente.nome}">Nome Ingrediente</span>
-                <span th:text="${ricettaIngrediente.quantita}">Quantità</span>
-            </li>
-        </ul>
-    </div>
-    <div th:if="${ingredientiQuantita == null || ingredientiQuantita.isEmpty()}">
-        Non ci sono ingredienti associati a questa ricetta
-    </div>-->
-<!--
-    <div th:if="${ricetta.user != null}">
-        Creato da: 
-        <a th:href="@{'/cuoco' + '/' + ${ricetta.user.id}}"
-           th:text="${ricetta.user.name} + ' ' + ${ricetta.user.surname} "></a>
-    </div>
-    <div th:if="${ricetta.user == null}"> Creatore sconosciuto </div>
-
-    <div class="description">
-        <a th:if="${currentUsername == ricetta.user?.credentials?.username}"
-           th:href="@{'/loggedIn/ricetta/modifica/' + ${ricetta.id}}" 
-           class="button">Modifica</a>
-    </div>
- </body>
- </html> 
--->

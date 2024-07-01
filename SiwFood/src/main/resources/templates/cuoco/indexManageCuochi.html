@@ -2,6 +2,8 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/manage.css">
     <title>Scopri</title>
      <link rel="stylesheet" href="/css/ricette.css">
@@ -13,18 +15,20 @@
       <ul>
 	    <li><img src="/images/logoIndex.jpg" alt="Logo"></li>
         <li><a href="/success">Home</a></li>
-        <li><a href="/ricette/categoria">Ricette</a></li>
+        <li><a href="/ricette">Ricette</a></li>
           <li><a href="/cuochi">Cuochi</a></li>
       
       </ul>
     </nav>
     <div class="cta">
-       <div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout" class="button">Logout</a>
-		</div>
-		 
-	</div>
+           <div th:if="${userDetails}">
+			 <span th:text="${userDetails.username}"></span>
+			 <a href="/logout" class="button">Logout</a>
+		   </div>
+		   <div th:unless="${userDetails}">
+             <a href="/login" class="button">Login</a>
+		   </div>
+    </div>
   </header>
 
     <div class="top">
@@ -42,7 +46,7 @@
       <div class="card-content">
 		  
         <h3>Ricette</h3>
-          <a th:href="@{'/ricette/categoria'}"
+          <a th:href="@{'/ricette'}"
            th:text="'Ricette'">Up! (2000)</a>
       </li>
       </div>
@@ -51,7 +55,7 @@
       <img src="/images/ricetteManage.jpg" alt="Lavoro 1">
       <div class="card-content">
         <h3>Ingredienti</h3>
-          <a th:href="@{'/loggedIn/ingredienti'}"
+          <a th:href="@{'/ingredienti'}"
            th:text="'Ingredienti'">Up! (2000)</a>
       </li>
       </div>

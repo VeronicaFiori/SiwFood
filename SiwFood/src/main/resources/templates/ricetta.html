@@ -1,48 +1,10 @@
-<!--
-	<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Ricetta</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-
-<body>
-	
-    <h1 th:text="${ricetta.nome}"> </h1>
-    <div th:if="${ricetta}">
-        <span th:text="${ricetta.descrizione}">2000</span>
-    </div>
-    <div th:unless="${ricetta}">Non ci sono ricette</div>
-     <h2>Ingredienti</h2> 
-     <div th:if="${ingredienti}">
-        <span th:text="${ingredienti.nome} + ' '+ ${ingredienti.quantita}">2000</span>
-    </div>
-    <div th:unless="${ingredienti}">Non ci sono ingredienti</div>
-  
-    <div th:if="${ricetta.user != null}">
-        Creato da: 
-			<a th:href="@{'/cuoco' + '/' + ${ricetta.user.id}}"
-				th:text="${ricetta.user.name}+' '+${ricetta.user.surname} "></a>
-   
-    </div>
-    <div th:if="${ricetta.user == null}">
-        Creatore sconosciuto
-    </div>
-  </body>
-</html>
--->
-
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cuoco</title>
+    <title>Ricetta</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/ricette.css">
     <link rel="stylesheet" href="/css/index.css">
@@ -59,16 +21,17 @@
                 <li><a href="/cuochi">Cuochi</a></li>
             </ul>
         </nav>
-        <div class="cta">
-            <a href="/login" class="button">Login</a>
+         <div class="cta">
+           <div th:if="${userDetails}">
+			 <span th:text="${userDetails.username}"></span>
+			 <a href="/logout" class="button">Logout</a>
+		   </div>
+		   <div th:unless="${userDetails}">
+             <a href="/login" class="button">Login</a>
+		   </div>
         </div>
     </header>
   
-  
-  
-  
-
-<body>
     <h1 class="text-center my-4" th:text="${ricetta.nome}">Ricetta </h1>
 
 	<div class="container">
@@ -108,7 +71,7 @@
                         <strong>Ingrediente</strong>
                     </div>
                     <div class="col">
-                        <strong>Quantità</strong>
+                        <strong>Quantit&agrave;</strong>
                     </div>
                 </div>
                 <ul class="list-group ingredienti-list">

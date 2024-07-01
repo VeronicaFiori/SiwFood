@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ricette per Categoria</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/ricette.css">
     <link rel="stylesheet" href="/css/index.css">
 </head>
@@ -14,20 +14,20 @@
             <ul>
 				<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
                 <li><a href="/success">Home</a></li>
-                <li><a href="/ricette/categoria">Ricette</a></li>
-                <li th:if="${userDetails.username=='a'}">
-			       <a href="/loggedIn/cuochi" >Cuochi</a> </li>
-			     <li th:if="${userDetails.username!='a'}">
-			       <a href="/cuochi" >Cuochi</a> </li>
+                <li><a href="/ricette">Ricette</a></li>
+                <li><a href="/cuochi" >Cuochi</a> </li>
+			     
             </ul>
         </nav>
         <div class="cta">
-       <div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout" class="button">Logout</a>
-		</div>
-		 
-	</div>
+           <div th:if="${userDetails}">
+			 <span th:text="${userDetails.username}"></span>
+			 <a href="/logout" class="button">Logout</a>
+		   </div>
+		   <div th:unless="${userDetails}">
+             <a href="/login" class="button">Login</a>
+		   </div>
+        </div>
     </header>
     
  
@@ -39,18 +39,19 @@
         </div>
         <h1 class="text-center" th:text="'Ricette: ' + ${categoria}"></h1>
 
-        <div th:if="${ricette == null || ricette.isEmpty()}">Non ci sono Ricette nel sistema</div>
+        <div th:if="${ricette == null}">Non ci sono Ricette nel sistema</div>
 
 
-        <div class="row" th:unless="${ricette == null || ricette.isEmpty()}">
+        <div class="row my-4" th:unless="${ricette == null }">
             <div class="col-md-4 mb-4" th:each="ricetta : ${ricette}">
                 <div class="card" style="width: 18rem;">
                     <img th:src="@{'/display/image/' + ${ricetta.image.id}}" class="w-100" alt="...">
                     <div class="card-body text-center">
                         <h5 class="card-title" th:text="${ricetta.nome}">Nome</h5>
-                        <a th:href="@{'/loggedIn/ricetta/' + ${ricetta.id}}" class="btn btn-primary" style="background-color: pink;">Guarda</a>
-                        <a th:href="@{'/loggedIn/deleteRicetta/'+ ${ricetta.id} + '/' + ${categoria}}"  class="btn btn-primary" style="background-color: pink;">Elimina</a>
-
+                        <div  class="card-buttons" >
+                        <a th:href="@{'/ricetta/' + ${ricetta.id}}" class="btn btn-primary" style="background-color: pink;">Guarda</a>
+                        <a th:href="@{'/deleteRicetta/'+ ${ricetta.id} + '/' + ${categoria}}"  class="btn btn-primary" style="background-color: pink;">Elimina</a>
+                        </div>
                     </div>
                 </div>
             </div>

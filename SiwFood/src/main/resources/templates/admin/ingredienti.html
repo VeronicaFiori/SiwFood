@@ -16,8 +16,8 @@
         <li><img src="/images/logoIndex.jpg" alt="Logo"></li>
 
         <li><a href="/success">Home</a></li>
-        <li><a href="/ricette/categoria">Ricette</a></li>
-        <li><a href="/loggedIn/cuochi">Cuochi</a></li>
+        <li><a href="/ricette">Ricette</a></li>
+        <li><a href="/cuochi">Cuochi</a></li>
       </ul>
     </nav>
     <div class="cta">
@@ -37,16 +37,13 @@
       <ul class="list-group">
         <li th:each="ingrediente : ${ingrediente}" class="list-group-item d-flex justify-content-between">
             <span th:text="${ingrediente.nome}"></span>
-            <a th:href="@{'/loggedIn/deleteIngrediente/' + ${ingrediente.id}}" class="btn btn-danger btn-sm">Elimina</a>
+            <a th:href="@{'/deleteIngrediente/' + ${ingrediente.id}}" class="btn btn-danger btn-sm">Elimina</a>
         </li>
        </ul>
     </div>
-
-
-
 	 
 	 <div class="description">
-        <a href="/loggedIn/addIngredienti" class="button">Aggiungi nuovi ingredienti</a>
+        <a href="/addIngredienti" class="button">Aggiungi nuovi ingredienti</a>
        
         <!-- Visualizza il messaggio di successo se presente -->
          <div th:if="${success}" style="color: green;">
@@ -54,27 +51,6 @@
         </div>
     </div>
 	
-<!--	<div th:if="${ingrediente==null }">Non ci sono ingredienti nel sistema</div>
-    
-	<ul>
-		<li th:each="ingrediente : ${ingrediente}">
-			<a th:text="${ingrediente.nome} "></a>
-			  <a th:href="@{'/loggedIn/deleteIngrediente/'+ ${ingrediente.id}}">Elimina</a>
-
-		</li>
-	</ul>
-	</div>
-	    <!-- Visualizza il messaggio di successo se presente -->
- <!--   <div th:if="${success}" style="color: green;">
-        <p th:text="${success}"></p>
-    </div>
-
-	 
-	 <div class="description">
-        <a href="/loggedIn/addIngredienti" class="button">Aggiungi nuovi ingredienti</a>
-       
-
-     </div> -->
 </body>
 
 </html>

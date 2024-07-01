@@ -14,9 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Ingrediente;
-import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.IngredienteRepository;
-import it.uniroma3.siw.repository.RicetteRepository;
 import it.uniroma3.siw.service.CredentialsService;
 
 
@@ -25,16 +23,20 @@ public class IngredientiController {
 
 	@Autowired
 	private IngredienteRepository ingredienteRepository;
-	@Autowired
-	private RicetteRepository ricetteRepository;
+
 	@Autowired
 	private CredentialsService credentialsService;
 
 
 
+	@GetMapping("/ingrediente/{id}")
+	public String getIngrediente(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("ingrediente", this.ingredienteRepository.findById(id).get());
+		return "/cuoco/ingrediente.html";
+	}
 
-	@GetMapping("/loggedIn/ingredienti")
-	public String getIngredienteCuoco(Model model) {	
+	@GetMapping("/ingredienti")
+	public String getIngredienti(Model model) {	
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 
@@ -46,24 +48,17 @@ public class IngredientiController {
 	}
 
 	/*SOLO ADMIN PUO ELIMINARE GLI INGREDIENTI*/
-	@GetMapping("/loggedIn/deleteIngrediente/{id}")
+	@GetMapping("/deleteIngrediente/{id}")
 	public String deleteIngrediente(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 
 		ingredienteRepository.deleteById(id);		
 		redirectAttributes.addFlashAttribute("success", "Ingrediente eliminato con successo!");
-		return "redirect:/loggedIn/ingredienti";
+		return "redirect:/ingredienti";
 	}
 
 
-
-	@GetMapping("/loggedIn/ingrediente/{id}")
-	public String getIngredienti(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("ingrediente", this.ingredienteRepository.findById(id).get());
-		return "/cuoco/ingrediente.html";
-	}
-
-	// Metodo per mostrare il form di aggiunta di un nuovo ingrediente
-	@GetMapping("/loggedIn/addIngredienti")
+	/* Aggiunta di un nuovo ingrediente*/
+	@GetMapping("/addIngredienti")
 	public String showAddIngredienteForm(Model model) {
 		model.addAttribute("ingrediente", new Ingrediente());
 		return "cuoco/addIngredientiCuochi.html";
@@ -71,7 +66,7 @@ public class IngredientiController {
 
 
 	/*USER PUO AGGIUNGERE UN INGREDIENTE*/
-	@PostMapping("/loggedIn/ingredienti")
+	@PostMapping("/ingredienti")
 	public String addIngrediente(@ModelAttribute Ingrediente ingrediente, BindingResult bindingResult, RedirectAttributes redirectAttributes,Model model) {
 		if (bindingResult.hasErrors()) {
 			return "cuoco/addIngredientiCuochi.html";
@@ -79,36 +74,16 @@ public class IngredientiController {
 		Ingrediente existingIngrediente = ingredienteRepository.findByNome(ingrediente.getNome());
 
 		if (existingIngrediente != null) {
-			// L'ingrediente esiste già nel database
+			// Se esiste già nel database
 			redirectAttributes.addFlashAttribute("error", "L'ingrediente esiste già nel database.");
-			return "redirect:/loggedIn/addIngredienti";
-		} else {
-			// L'ingrediente non esiste nel database, aggiungilo
+			return "redirect:/addIngredienti";
+		} else {			
 			ingredienteRepository.save(ingrediente);
 			redirectAttributes.addFlashAttribute("success", "Ingrediente aggiunto con successo!");
 
 			model.addAttribute("ingrediente", new Ingrediente());
 			model.addAttribute("ingredienti", ingredienteRepository.findAll());
-			return "redirect:/loggedIn/ingredienti";
+			return "redirect:/ingredienti";
 		}
 	}
-
-	//	// Metodo per gestire l'aggiunta di un nuovo ingrediente nella pagina con ricette
-	//		@PostMapping("/cuoco/ricetteCuoco")
-	//		public String addIngrediente(@ModelAttribute Ingrediente ingrediente, BindingResult bindingResult, RedirectAttributes redirectAttributes,Model model) {
-	//			if (bindingResult.hasErrors()) {
-	//				return "cuoco/addIngredientiCuochi.html";
-	//			}
-	//			ingredienteRepository.save(ingrediente);
-	//			redirectAttributes.addFlashAttribute("success", "Ingrediente aggiunto con successo!");
-	//			model.addAttribute("ingrediente", ingrediente);
-	//			model.addAttribute("ingrediente", this.ingredienteRepository.findAll());
-	//			model.addAttribute("ricetta", this.ricetteRepository.findAll());
-	//
-	//			return "/cuoco/ricetteCuoco.html";
-	//		}
-
-
-
-
 }

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<htm lang="it">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cuoco</title>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/ricette.css">
     <link rel="stylesheet" href="/css/index.css">
@@ -15,7 +16,7 @@
             <ul>
 				<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
 				
-                <li><a href="/">Home</a></li>
+                <li><a href="/success">Home</a></li>
                 <li><a href="/ricette">Ricette</a></li>
                 <li><a href="/cuochi">Cuochi</a></li>
             </ul>
@@ -45,9 +46,9 @@
         <h3> Informazioni sulla Chef:   </h3>
          <div th:if="${cuoco}">
            <h5 class="my-4"> Email:   </h5>
-             <a class="list-group-item list-group-item-action list-group-item-info" th:text="${cuoco.email}" >A simple info list group item</a>
+             <a class="list-group-item list-group-item-action list-group-item-info" th:text="${cuoco.email}" > </a>
            <h5 class="my-4"> Data di nascita:   </h5>
-             <a class="list-group-item list-group-item-action list-group-item-info" th:text="${cuoco.data}" >A simple info list group item</a>
+             <a class="list-group-item list-group-item-action list-group-item-info" th:text="${cuoco.data}" > </a>
          </div>
        <div th:unless="${cuoco}">Non ci sono dati di questo cuoco</div>    
       </div>
@@ -61,16 +62,27 @@
       <div th:if="${ricette != null }">
      
           <ul class="list-group">
-            <li class="list-group-item" th:each="ricetta : ${ricette}">
-				<a th:href="@{'/ricetta' + '/' + ${ricetta.id}}"
-				th:text="${ricetta.nome} "></a>           
-            </li>
-        </ul>
+            <li class="list-group-item  d-flex justify-content-between" th:each="ricetta : ${ricette}">
+				
+                   <div class="p-2 flex-grow-1">
+					   <a th:href="@{'/ricetta' + '/' + ${ricetta.id}}"
+				          th:text="${ricetta.nome} "></a>
+				    </div>
+                    <div class="p-2">
+						<a  th:if="${currentUsername == cuoco.credentials?.username || userDetails.username=='Veronica'}"
+                            th:href="@{'/ricetta/modifica/' + ${ricetta.id}}" class="btn btn-danger btn-sm">Modifica</a> 
+                    </div>
+             </li>
+           </ul>
+         <div class="description">
+			<a th:if="${currentUsername == cuoco.credentials?.username || userDetails.username=='Veronica'}"
+			   th:href="@{/addRicetta}" class="button">Aggiungi nuove ricette</a>
+	    </div>
       </div>
-      <div class="description"> </div>
+     <div class="description"> </div>
 
   </body>
   
   
 </html>
-  
+

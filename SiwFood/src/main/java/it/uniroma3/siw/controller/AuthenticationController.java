@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import it.uniroma3.siw.controller.validator.CredentialsValidator;
+import it.uniroma3.siw.controller.validator.UserValidator;
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.model.User;
@@ -26,23 +29,27 @@ import jakarta.validation.Valid;
 
 @Controller
 public class AuthenticationController {
-	
+
 	@Autowired
 	private CredentialsService credentialsService;
 
-    @Autowired
+	@Autowired
 	private UserService userService;
-    
-    @Autowired
-    private ImageRepository imageRepository;
-	
+
+	@Autowired
+	private ImageRepository imageRepository;
+	@Autowired 
+	private UserValidator userValidator;
+	@Autowired 
+	private CredentialsValidator credentialsValidator;
+
 	@GetMapping(value = "/register") 
 	public String showRegisterForm (Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
 		return "formRegisterUser";
 	}
-	
+
 	@GetMapping(value = "/login") 
 	public String showLoginForm (Model model) {
 		return "formLogin";
@@ -52,7 +59,7 @@ public class AuthenticationController {
 	public String index(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken) {
-	        return "index.html";
+			return "index.html";
 		}
 		else {		
 			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -61,43 +68,45 @@ public class AuthenticationController {
 				return "admin/indexAdmin.html";
 			}
 		}
-        return "index.html";
+		return "index.html";
 	}
-		
-    @GetMapping(value = "/success")
-    public String defaultAfterLogin(Model model) {
-        
-    	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-    	if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-            return "admin/indexAdmin.html";
-        }
-        return "cuoco/indexCuochi.html";
-    }
+
+	@GetMapping(value = "/success")
+	public String defaultAfterLogin(Model model) {
+
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+			return "admin/indexAdmin.html";
+		}
+		return "cuoco/indexCuochi.html";
+	}
 
 	@PostMapping(value = { "/register" })
-    public String registerUser(@Valid @ModelAttribute("user") User user,
-                 BindingResult userBindingResult, @Valid
-                 @ModelAttribute("credentials") Credentials credentials,
-                 BindingResult credentialsBindingResult,
-                 Model model,
-                 @RequestParam("file") MultipartFile image) throws IOException {
+	public String registerUser(@Valid @ModelAttribute("user") User user,
+			BindingResult userBindingResult, @Valid
+			@ModelAttribute("credentials") Credentials credentials,
+			BindingResult credentialsBindingResult,
+			Model model,
+			@RequestParam("file") MultipartFile image,
+			RedirectAttributes redirectAttributes) throws IOException {
 
-		// se user e credential hanno entrambi contenuti validi, memorizza User e the Credentials nel DB
-        if(!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
-            
-            
-            /**/
-            Image img = new Image(image.getBytes());
-            this.imageRepository.save(img);
-            user.setImage(img);
-            userService.saveUser(user);
-            credentials.setUser(user);
-            credentialsService.saveCredentials(credentials);
-            model.addAttribute("user", user);
-            
-            return "registrationSuccessful";
-        }
-        return "registerUser";
-    }
+		this.userValidator.validate(user, credentialsBindingResult);
+		this.credentialsValidator.validate(credentials,credentialsBindingResult);
+
+		if(!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
+
+			Image img = new Image(image.getBytes());
+			this.imageRepository.save(img);
+			user.setImage(img);
+			userService.saveUser(user);
+			credentials.setUser(user);
+			credentialsService.saveCredentials(credentials);
+			model.addAttribute("user", user);
+
+			return "registrationSuccessful";
+		}
+
+		return "formRegisterUser";
+	}
 }

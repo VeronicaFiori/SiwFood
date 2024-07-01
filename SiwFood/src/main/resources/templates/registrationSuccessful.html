@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cuoco</title>
+    <title>Registrazione completata</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/ricette.css">
     <link rel="stylesheet" href="/css/index.css">
@@ -21,8 +20,14 @@
                 <li><a href="/cuochi">Cuochi</a></li>
             </ul>
         </nav>
-        <div class="cta">
-            <a href="/login" class="button">Login</a>
+         <div class="cta">
+           <div th:if="${userDetails}">
+			 <span th:text="${userDetails.username}"></span>
+			 <a href="/logout" class="button">Logout</a>
+		   </div>
+		   <div th:unless="${userDetails}">
+             <a href="/login" class="button">Login</a>
+		   </div>
         </div>
     </header>
 

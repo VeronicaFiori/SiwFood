@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Ricette</title>
+    <title>Cuochi</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/ricette.css">
     <link rel="stylesheet" href="/css/index.css">
@@ -40,7 +40,7 @@
     <div class="container my-3">
         <h1 class="text-center"> Cuochi</h1>
 	    <div th:if="${cuochi == null }">Non ci sono Cuochi nel sistema</div>
-        <div class="row" th:if="${cuochi != null} ">
+        <div class="row my-4" th:if="${cuochi != null} ">
 			<div class="col-md-4 mb-4" th:each="cuoco : ${cuochi}" >
 				<div class="card" style="width: 18rem;">
                     <img th:src="@{'/display/image/' + ${cuoco.image.id}}" class="w-100" alt="...">
@@ -58,23 +58,3 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
-
-	<!-- <ul>
-		<li th:each="cuoco : ${cuochi}">
-			<a th:href="@{'/cuoco' + '/' + ${cuoco.id}}"
-				th:text="${cuoco.name}+' '+${cuoco.surname} "></a>
-		</li>
-	</ul>
-	</div>
-</body>
-
-</html>
-    
-  </div>
-</body>
-</html>
--->
-
-
-
-

@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 
 <head>
+	 <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>
-		AddIngredienti
+		AggiungiIngredienti
 	</title>
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
      <link rel="stylesheet" href="/css/ricette.css">
@@ -15,7 +18,7 @@
             <ul>
 				<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
                 <li><a href="/success">Home</a></li>
-                <li><a href="/ricette/categoria">Ricette</a></li>
+                <li><a href="/ricette">Ricette</a></li>
                 <li><a href="/cuochi">Cuochi</a></li>
             </ul>
         </nav>
@@ -42,7 +45,7 @@
             <p th:text="${error}"></p>
         </div>
 
-        <form th:action="@{/loggedIn/ingredienti}" method="POST" th:object="${ingrediente}">
+        <form th:action="@{/ingredienti}" method="POST" th:object="${ingrediente}">
             <div th:if="${#fields.hasGlobalErrors()}">
                 <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
             </div>

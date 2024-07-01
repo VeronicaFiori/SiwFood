@@ -1,10 +1,7 @@
 package it.uniroma3.siw.model;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,55 +18,17 @@ public class Ingrediente {
 	private Long id;
 
 	@NotBlank
-	
 	private String nome;
 	
     private String quantita;
     
-//    @ManyToMany(mappedBy = "ingredienti")
-//    private List<Ricette> ricette;
-    
-//    @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<RicettaIngrediente> ricetta = new HashSet<>();
-    
-//    @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<RicettaIngrediente> ricetteQuantita = new ArrayList<>();
-//
-//    
-//    
-//    
-//	public List<RicettaIngrediente> getRicetteQuantita() {
-//		return ricetteQuantita;
-//	}
-//	public void setRicetteQuantita(List<RicettaIngrediente> ricetteQuantita) {
-//		this.ricetteQuantita = ricetteQuantita;
-//	}
-//	public Ricette getRicetta() {
-//		return ricetta;
-//	}
-//	public void setRicetta(Ricette ricetta) {
-//		this.ricetta = ricetta;
-//	}
-    
-    
+    @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.REFRESH, orphanRemoval = true)
+    private List<RigaRicetta> righeRicetta;
     
     
 	public Long getId() {
 		return id;
 	}
-//	public Set<RicettaIngrediente> getRicette() {
-//		return ricetta;
-//	}
-//	public void setRicette(Set<RicettaIngrediente> ricette) {
-//		this.ricetta = ricette;
-//	}
-	
-//	public List<Ricette> getRicetta() {
-//		return ricette;
-//	}
-//	public void setRicetta(List<Ricette> ricetta) {
-//		this.ricette = ricetta;
-//	}
 	
 	public void setId(Long id) {
 		this.id = id;

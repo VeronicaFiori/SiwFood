@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>SiwFood</title>
+  <title>HomePage</title>
   <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
@@ -18,14 +18,15 @@
         <li><a href="/cuochi">Cuochi</a></li>
       </ul>
     </nav>
-    <div class="cta">
-	  <div th:if="${userDetails}">
-	     <span th:text="${userDetails.username}"></span>
-         <a href="logout" class="button">Logout</a>
-	  </div>
-	  <div th:unless="${user}">
-         <a href="login" class="button">Login</a>
-     </div>
+     <div class="cta">
+           <div th:if="${userDetails}">
+			 <span th:text="${userDetails.username}"></span>
+			 <a href="/logout" class="button">Logout</a>
+		   </div>
+		   <div th:unless="${userDetails}">
+             <a href="/login" class="button">Login</a>
+		   </div>
+        </div>
   </header>
   
   
@@ -39,7 +40,7 @@
 		
 		
     <div class="hero__image">
-      <img src="/images/logo2.jpg" class="img-res img-round" alt="im">
+      <img src="/images/logoIndex.jpg" class="img-res img-round" style="height: 300px; width: 500px; margin-right: 10px;" alt="im">
     </div>
   </div>
   

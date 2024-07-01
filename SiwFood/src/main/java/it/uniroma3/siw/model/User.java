@@ -15,6 +15,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -30,7 +32,8 @@ public class User {
 	private String surname;
 	@NotBlank
 	private String email;
-
+	
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate data ;
 	
 	@OneToOne
@@ -51,8 +54,6 @@ public class User {
     private Credentials credentials;
 
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate dataNascita;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Ricette> ricette;
@@ -67,13 +68,7 @@ public class User {
 		this.credentials = credentials;
 	}
 
-	public LocalDate getDataNascita() {
-		return dataNascita;
-	}
-
-	public void setDataNascita(LocalDate dataNascita) {
-		this.dataNascita = dataNascita;
-	}
+	
     public Set<Ricette> getRicette() {
 		return ricette;
 	}
@@ -89,6 +84,7 @@ public class User {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public String getName() {
 		return name;
 	}
@@ -124,7 +120,7 @@ public class User {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(credentials, data, dataNascita, email, id, name, ricette, surname);
+		return Objects.hash(credentials, data, email, id, name, ricette, surname);
 	}
 
 	@Override
@@ -137,7 +133,7 @@ public class User {
 			return false;
 		User other = (User) obj;
 		return Objects.equals(credentials, other.credentials) && Objects.equals(data, other.data)
-				&& Objects.equals(dataNascita, other.dataNascita) && Objects.equals(email, other.email)
+				 && Objects.equals(email, other.email)
 				&& Objects.equals(id, other.id) && Objects.equals(name, other.name)
 				&& Objects.equals(ricette, other.ricette) && Objects.equals(surname, other.surname);
 	}

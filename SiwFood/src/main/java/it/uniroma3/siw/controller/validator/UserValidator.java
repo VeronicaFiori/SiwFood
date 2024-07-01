@@ -6,24 +6,26 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import it.uniroma3.siw.model.Ricette;
-import it.uniroma3.siw.repository.RicetteRepository;
+import it.uniroma3.siw.model.User;
+import it.uniroma3.siw.repository.UserRepository;
+
 
 @Component
-public class RicetteValidator implements Validator {
+public class UserValidator implements Validator {
 	@Autowired
-	private RicetteRepository ricetteRepository;
+	private UserRepository userRepository;
 
 	@Override
 	public void validate(Object o, Errors errors) {
-		Ricette ricetta = (Ricette)o;
-		if (ricetta.getNome()!=null
-				&& ricetteRepository.existsByNome(ricetta.getNome())) {
-			errors.reject("ricette.duplicate");
+		User user = (User)o;
+		if (user.getEmail()!=null 
+				&& userRepository.existsByEmail(user.getEmail())) {
+			errors.reject("user.duplicate");
 		}
 	}
 	@Override
 	public boolean supports(Class<?> aClass) {
-		return Ricette.class.equals(aClass);
+		return User.class.equals(aClass);
 	}
 
 	

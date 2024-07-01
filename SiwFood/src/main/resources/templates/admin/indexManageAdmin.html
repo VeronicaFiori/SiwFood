@@ -13,8 +13,8 @@
       <ul>
 		<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
         <li><a href="/success">Home</a></li>
-        <li><a href="/ricette/categoria">Ricette</a></li>
-        <li><a href="/loggedIn/cuochi">Cuochi</a></li>
+        <li><a href="/ricette">Ricette</a></li>
+        <li><a href="/cuochi">Cuochi</a></li>
       
       </ul>
     </nav>
@@ -40,7 +40,7 @@
       <img src="/images/ricetteManage.jpg" alt="Lavoro 1">
       <div class="card-content">
         <h3>Ricette</h3>
-          <a th:href="@{'/ricette/categoria'}"
+          <a th:href="@{'/ricette'}"
            th:text="'Gestisci le ricette'"></a>
       </div>
     </div>
@@ -48,7 +48,7 @@
       <img src="/images/ricetteManage.jpg" alt="Lavoro 1">
       <div class="card-content">
         <h3>Ingredienti</h3>
-          <a th:href="@{'/loggedIn/ingredienti'}"
+          <a th:href="@{'/ingredienti'}"
            th:text="'Gestisci gli ingredienti'"></a>
       
       </div>
@@ -57,7 +57,7 @@
       <img src="/images/chef2.jpg" alt="Lavoro 1">
       <div class="card-content">
       <h3>Cuochi</h3>
-       <a th:href="@{'/loggedIn/cuochi'}"
+       <a th:href="@{'/cuochi'}"
            th:text="'Gestisci gli Chef'"></a>
 
       </div> 

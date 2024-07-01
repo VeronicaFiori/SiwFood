@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,8 +19,8 @@
 	    <li><img src="/images/logoIndex.jpg" alt="Logo"></li>
 
         <li><a href="/">Home</a></li>
-        <li><a href="/ricette/categoria">Ricette</a></li>
-          <li><a href="/loggedIn/cuochi">Cuochi</a></li>
+        <li><a href="/ricette">Ricette</a></li>
+          <li><a href="/cuochi">Cuochi</a></li>
       
       </ul>
     </nav>
@@ -43,7 +40,7 @@
     <div class="container my-3">
         <h1 class="text-center"> Cuochi</h1>
 	    <div th:if="${cuochi == null }">Non ci sono Cuochi nel sistema</div>
-        <div class="row" th:if="${cuochi != null} ">
+        <div class="row my-4" th:if="${cuochi != null} ">
 			<div class="col-md-4 mb-4" th:each="cuoco : ${cuochi}" >
 				<div class="card" style="width: 18rem;">
                     <img th:src="@{'/display/image/' + ${cuoco.image.id}}" class="w-100" alt="...">
@@ -53,7 +50,8 @@
 				            class="card-title" th:text="${cuoco.name}+' '+${cuoco.surname} "></a>
 						</div>
 						<div>
-				          <a th:href="@{'/loggedIn/deleteCuoco/'+ ${cuoco.id}}" class="btn btn-danger btn-sm">Elimina</a>
+				          <a th:if="${userDetails.username == 'Veronica'}"
+				          th:href="@{'/deleteCuoco/'+ ${cuoco.id}}" class="btn btn-danger btn-sm">Elimina</a>
                         </div>
                     </div>
                 </div>
@@ -61,7 +59,7 @@
         </div>
         
         <div class="description">
-          <a href="/loggedIn/addCuoco" class="button">Aggiungi nuovi Chef</a>
+          <a  th:if="${userDetails.username == 'Veronica'}" th:href="@{'/addCuoco'}" class="button">Aggiungi nuovi Chef</a>
         
           <div th:if="${success}" style="color: green;">
             <p th:text="${success}"></p>
@@ -77,21 +75,7 @@
 </body>
 </html>
 
-	<!-- <ul>
-		<li th:each="cuoco : ${cuochi}">
-			<a th:href="@{'/cuoco' + '/' + ${cuoco.id}}"
-				th:text="${cuoco.name}+' '+${cuoco.surname} "></a>
-		</li>
-	</ul>
-	</div>
-</body>
 
-</html>
-    
-  </div>
-</body>
-</html>
--->
 
 
 

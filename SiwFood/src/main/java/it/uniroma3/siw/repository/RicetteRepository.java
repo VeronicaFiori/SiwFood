@@ -14,4 +14,6 @@ public interface RicetteRepository extends CrudRepository<Ricette, Long> {
     @Query("SELECT r FROM Ricette r WHERE r.categoria = :categoria")
     List<Ricette> findByCategoria(@Param("categoria") String categoria);
 
+	public boolean existsByNome(String nome);	
+
 }

@@ -14,26 +14,26 @@
             <ul>
 				<li><img src="/images/logoIndex.jpg" alt="Logo"></li>
                 <li><a href="/success">Home</a></li>
-                <li><a href="/ricette/categoria">Ricette</a></li>
-                <li th:if="${userDetails.username=='a'}">
-			       <a href="/loggedIn/cuochi" >Cuochi</a> </li>
-			     <li th:if="${userDetails.username!='a'}">
-			       <a href="/cuochi" >Cuochi</a> </li>
+                <li><a href="/ricette">Ricette</a></li>
+                <li><a href="/cuochi" >Cuochi</a> </li>
             </ul>
         </nav>
         <div class="cta">
-       <div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout" class="button">Logout</a>
-		</div>
-	</div>
+           <div th:if="${userDetails}">
+			 <span th:text="${userDetails.username}"></span>
+			 <a href="/logout" class="button">Logout</a>
+		   </div>
+		   <div th:unless="${userDetails}">
+             <a href="/login" class="button">Login</a>
+		   </div>
+        </div>
     </header>
    
     <h1 class="text-center my-4">Modifica ricetta</h1>
 
    	<div class="container">
 
-    <form th:action="@{'/loggedIn/ricetta/modifica/' + ${ricetta.id}}" th:object="${ricetta}" method="post">
+    <form th:action="@{'/ricetta/modifica/' + ${ricetta.id}}" th:object="${ricetta}" method="post">
         <div>
             <label for="nome" class="form-label">Nome</label>
             <input type="text" class="form-control" id="nome" placeholder="nome" required th:field="${ricetta.nome}"  />
@@ -41,7 +41,7 @@
         </div>
         <div>
             <label for="descrizione" class="form-label my-3">Descrizione</label>
-            <textarea type="text" class="form-control" id="nome" placeholder="nome" required th:field="${ricetta.descrizione}"  />
+            <textarea type="text" class="form-control" id="nome" style="height: 200px" placeholder="nome" required th:field="${ricetta.descrizione}"  />
             <span th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}"></span>
         </div>
         <div class="form-group my-3">
@@ -93,7 +93,7 @@
         </div>
 
         <div>
-            <button type="submit" class="btn btn-primary">Salva Modifiche</button>
+            <button type="submit" class="btn btn-primary my-4">Salva Modifiche</button>
         </div>
     </form>
    	</div>

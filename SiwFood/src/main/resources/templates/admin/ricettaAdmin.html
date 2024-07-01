@@ -17,17 +17,20 @@
 	   <li><img src="/images/logoIndex.jpg" alt="Logo"></li>
 
         <li><a href="/success">Home</a></li>
-        <li><a href="/ricette/categoria">Ricette</a></li>
-        <li><a href="/loggedIn/cuochi">Cuochi</a></li>
+        <li><a href="/ricette">Ricette</a></li>
+        <li><a href="/cuochi">Cuochi</a></li>
       </ul>
     </nav>
     
     <div class="cta">
-	  <div th:if="${userDetails}">
-	     <span th:text="${userDetails.username}"></span>
-         <a href="logout" class="button">Logout</a>
-	  </div>
-     </div>
+           <div th:if="${userDetails}">
+			 <span th:text="${userDetails.username}"></span>
+			 <a href="/logout" class="button">Logout</a>
+		   </div>
+		   <div th:unless="${userDetails}">
+             <a href="/login" class="button">Login</a>
+		   </div>
+    </div>
   </header>
 	
 
@@ -71,7 +74,7 @@
                         <strong>Ingrediente</strong>
                     </div>
                     <div class="col">
-                        <strong>Quantità</strong>
+                        <strong>Quantit&agrave;</strong>
                     </div>
                 </div>
                 <ul class="list-group ingredienti-list">
@@ -90,8 +93,12 @@
          
     
     <div class="description">
-        <a th:href="@{'/loggedIn/ricetta/modifica/' + ${ricetta.id}}" 
+        <a th:href="@{'/ricetta/modifica/' + ${ricetta.id}}" 
            class="button">Modifica</a>
+    </div>
+    <div class="description">
+        <a th:href="@{'/deleteRicetta/'+ ${ricetta.id} + '/' + ${categoria}}"  
+           class=" buttondanger text-center "  >Elimina</a> 
     </div>
 </body>
 </html>

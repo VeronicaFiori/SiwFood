@@ -56,6 +56,8 @@ public class Ricette {
 	@OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RigaRicetta> righeRicetta;
 	
+	
+	
 	public List<RigaRicetta> getRigheRicetta() {
 		return righeRicetta;
 	}

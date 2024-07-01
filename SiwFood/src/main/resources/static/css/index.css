@@ -142,5 +142,9 @@ h2 {
 .thin-text{
 	 font-weight: 200;
  }
+ 
+.text-center {
+    text-align: center;
+}
 
 

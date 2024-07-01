@@ -18,6 +18,7 @@ public class IngredienteService {
 		return ingredienteRepository.findById(id).get();
 	}
 
+	
 	public Iterable<Ingrediente> findAll() {
 		return ingredienteRepository.findAll();
 	}
@@ -53,6 +54,7 @@ public class IngredienteService {
     public List<Ingrediente> getAllIngredienti() {
         return (List<Ingrediente>) ingredienteRepository.findAll();
     }
+
 }
 
 

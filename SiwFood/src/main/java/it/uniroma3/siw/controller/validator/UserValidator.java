@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import it.uniroma3.siw.model.Ricette;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.UserRepository;
 

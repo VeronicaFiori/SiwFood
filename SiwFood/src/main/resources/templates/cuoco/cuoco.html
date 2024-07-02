@@ -49,6 +49,11 @@
              <a class="list-group-item list-group-item-action list-group-item-info" th:text="${cuoco.email}" > </a>
            <h5 class="my-4"> Data di nascita:   </h5>
              <a class="list-group-item list-group-item-action list-group-item-info" th:text="${cuoco.data}" > </a>
+             
+            <div class="description">
+			<a th:if="${credentials.role=='ADMIN'}"
+			   th:href="@{'/modificaCuoco/'+${cuoco.id}}" class="button">Modifica</a>
+	    </div>
          </div>
        <div th:unless="${cuoco}">Non ci sono dati di questo cuoco</div>    
       </div>
@@ -69,7 +74,7 @@
 				          th:text="${ricetta.nome} "></a>
 				    </div>
                     <div class="p-2">
-						<a  th:if="${currentUsername == cuoco.credentials?.username || userDetails.username=='Veronica'}"
+						<a  th:if="${currentUsername == cuoco.credentials?.username || credentials.role=='ADMIN'}"
                             th:href="@{'/ricetta/modifica/' + ${ricetta.id}}" class="btn btn-danger btn-sm">Modifica</a> 
                     </div>
              </li>

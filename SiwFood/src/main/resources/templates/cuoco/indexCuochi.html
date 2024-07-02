@@ -43,8 +43,11 @@
     <h2>Leggi, condividi e crea le tue ricette preferite!</h2>
      <p> Inoltre ccontrolla gli ingredienti necessari. Se manca qualcosa, aggiungilo tu stesso</p>
     
+    <div class="buttons">
     <a href="/manage" class="button">SCOPRI COME</a>
+    <a th:href="@{'/cuoco/'+${user.id}}" class="button-profilo">IL MIO PROFILO</a>
 
+    </div>
   </div>
 </body>
 </html>

@@ -123,6 +123,9 @@ align-items: center;
   font-weight: bold;
 }
 
+.bg-body-secondary {
+    background-color:  #eaf6f8;
+}
 
 
 /* Media query per dispositivi più piccoli */

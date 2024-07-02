@@ -93,4 +93,8 @@
  .thin-text{
 	 font-weight: 200;
  }
+ 
+ .bg-body-secondary  {
+    background-color:  #eaf6f8;
+ }
 }

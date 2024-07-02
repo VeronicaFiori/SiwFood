@@ -28,8 +28,6 @@ import it.uniroma3.siw.model.Ricette;
 import it.uniroma3.siw.model.RigaRicetta;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.ImageRepository;
-import it.uniroma3.siw.repository.RicetteRepository;
-import it.uniroma3.siw.repository.UserRepository;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.IngredienteService;
 import it.uniroma3.siw.service.RicetteService;
@@ -38,21 +36,15 @@ import jakarta.validation.Valid;
 
 @Controller
 public class RicetteController {
-	@Autowired
-	private RicetteRepository ricetteRepository;
+	
 	@Autowired
 	private RicetteService ricetteService;
 	@Autowired
 	private UserService userService;
-
 	@Autowired
 	private IngredienteService ingredienteService;
 	@Autowired
 	private CredentialsService credentialsService;
-
-	@Autowired
-	private  UserRepository userRepository;
-
 	@Autowired
 	private ImageRepository imageRepository;
 	@Autowired
@@ -85,7 +77,7 @@ public class RicetteController {
 	public String getRicetta(@PathVariable("id") Long id, Model model,String categoria) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-		Ricette ricetta = ricetteRepository.findById(id).get();
+		Ricette ricetta = this.ricetteService.findById(id);
 		model.addAttribute("ricetta", ricetta);
 		if (authentication instanceof AnonymousAuthenticationToken) {
 			return "ricetta.html";
@@ -151,7 +143,7 @@ public class RicetteController {
 		
 
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-			ricetteRepository.deleteById(id);		
+			this.ricetteService.deleteRicettaById(id); 		
 			redirectAttributes.addFlashAttribute("success", "Ricetta eliminata con successo!");
 			return "redirect:/ricette/{categoria}";
 		}
@@ -177,12 +169,12 @@ public class RicetteController {
 
 		Ricette ricetta = new Ricette();
 		model.addAttribute("ricetta", ricetta);
-		List<Ingrediente> ingredienti = ingredienteService.getAllIngredienti();
+		List<Ingrediente> ingredienti = ingredienteService.findAll(); 
 		model.addAttribute("ingredienti", ingredienti);
 
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			// Recupera gli utenti con ruolo "DEFAULT" solo per l'admin
-			List<User> cuochi = userRepository.findByRole(Credentials.DEFAULT_ROLE);
+			List<User> cuochi = this.userService.findByRole(Credentials.DEFAULT_ROLE);
 			model.addAttribute("cuochi", cuochi);
 			return "/admin/aggiungiRicetta.html";
 
@@ -203,7 +195,7 @@ public class RicetteController {
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 
 		this.ricetteValidator.validate(ricetta, bindingResult);
-		List<Ingrediente> ingredienti = ingredienteService.getAllIngredienti();
+		List<Ingrediente> ingredienti = ingredienteService.findAll();;
 		model.addAttribute("ingredienti", ingredienti);
 
 
@@ -248,7 +240,7 @@ public class RicetteController {
 			return "redirect:/ricette/{categoria}";
 		}
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-			List<User> cuochi = userRepository.findByRole(Credentials.DEFAULT_ROLE);
+			List<User> cuochi = this.userService.findByRole(Credentials.DEFAULT_ROLE); 
 			model.addAttribute("cuochi", cuochi);
 			return "/admin/aggiungiRicetta.html";	
 		}
@@ -261,17 +253,17 @@ public class RicetteController {
 
 	@GetMapping("/ricetta/modifica/{id}")
 	public String showEditRicetta(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
-		Ricette ricetta = ricetteRepository.findById(id).get(); 
+		Ricette ricetta = this.ricetteService.findById(id); 
 
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 
 		model.addAttribute("ricetta", ricetta);
-		List<Ingrediente> ingredienti = ingredienteService.getAllIngredienti();
+		List<Ingrediente> ingredienti = ingredienteService.findAll();;
 		model.addAttribute("ingredienti", ingredienti);
 
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-			List<User> cuochi = userRepository.findByRole(Credentials.DEFAULT_ROLE);
+			List<User> cuochi = this.userService.findByRole(Credentials.DEFAULT_ROLE); 
 			model.addAttribute("cuochi", cuochi);
 			return "/admin/modifica.html";
 		}
@@ -314,4 +306,6 @@ public class RicetteController {
 
 		return "redirect:/ricetta/{id}";
 	}
+	
+	
 }

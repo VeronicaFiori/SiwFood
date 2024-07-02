@@ -4,10 +4,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.uniroma3.siw.model.Ingrediente;
 import it.uniroma3.siw.model.Ricette;
-import it.uniroma3.siw.repository.IngredienteRepository;
 import it.uniroma3.siw.repository.RicetteRepository;
+import jakarta.transaction.Transactional;
 
 
 @Service
@@ -17,26 +16,28 @@ public class RicetteService {
 
 	@Autowired
 	private RicetteRepository ricetteRepository;
-	@Autowired
-	private IngredienteRepository ingredienteRepository;
-
+	
+	@Transactional
 	public Ricette findById(Long id) {
 		return ricetteRepository.findById(id).get();
 	}
-
+    
+	@Transactional
 	public Iterable<Ricette> findAll() {
 		return ricetteRepository.findAll();
 	}
-
+	
+	@Transactional
 	public void save(Ricette ricette) {
 		ricetteRepository.save(ricette);
 	}
 
-
-//	public void deleteRicetta(Long id,currentUser.getId()) {
-//		ricetteRepository.deleteById(id);
-//	}
-
+	@Transactional
+	public void deleteRicettaById(Long id) {
+		this.ricetteRepository.deleteById(id);
+	}
+	
+	@Transactional
 	public void deleteRicetta(Long ricettaId, Long userId) {
 	    Ricette ricetta = ricetteRepository.findById(ricettaId).orElse(null);
 	    if (ricetta != null && ricetta.getUser().getId().equals(userId)) {
@@ -46,27 +47,19 @@ public class RicetteService {
 	    }
 	}
 	
-	
+	@Transactional
 	public Ricette getRicetta(Long id) {
 		return ricetteRepository.findById(id).orElse(null);
 	}
 	
-	// Metodo per ottenere le ricette create da un cuoco con un determinato ID
-    public List<Ricette> getRicetteByCuocoId(Long cuocoId) {
+	@Transactional
+	public List<Ricette> getRicetteByCuocoId(Long cuocoId) {
         return ricetteRepository.findByUserId(cuocoId); 
     }
-
+	@Transactional
     public List<Ricette> findByCategoria(String categoria) {
         return ricetteRepository.findByCategoria(categoria);
     }
     
-    
-    /*PROVA*/
-//    public Ingrediente getIngrediente(Long id) {
-//        return ingredienteRepository.findById(id).orElse(null);
-//    }
 
-//    public List<Ingrediente> findAllIngredienti() {
-//        return (List<Ingrediente>) ingredienteRepository.findAll();
-//    }
 }

@@ -1,8 +1,8 @@
 package it.uniroma3.siw.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -35,8 +35,8 @@ import jakarta.validation.Valid;
 
 @Controller
 public class CuocoController {
-	@Autowired 
-	private UserRepository userRepository;
+
+	
 	@Autowired 
 	private RicetteService ricetteService;
 	@Autowired
@@ -55,7 +55,7 @@ public class CuocoController {
 	@GetMapping("/cuochi")
 	public String getCuochi(Model model) {		
 		/*stampo solo i cuochi e non l'admin*/
-		List<User> cuochi = userRepository.findByRole(Credentials.DEFAULT_ROLE);
+		List<User> cuochi = this.userService.findByRole(Credentials.DEFAULT_ROLE);//  userRepository.findByRole(Credentials.DEFAULT_ROLE);
 		model.addAttribute("cuochi", cuochi);
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -76,7 +76,7 @@ public class CuocoController {
 	@GetMapping("/cuoco/{id}")
 	public String getCuoco(@PathVariable("id") Long id, Model model) {
 
-		model.addAttribute("cuoco", this.userRepository.findById(id).get());
+		model.addAttribute("cuoco", this.userService.findById(id));
 		List<Ricette> ricette = ricetteService.getRicetteByCuocoId(id);
 		model.addAttribute("ricette", ricette);	
 
@@ -89,7 +89,8 @@ public class CuocoController {
 			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 			String currentUsername = userDetails.getUsername();
 			if (credentials.getRole().equals(Credentials.ADMIN_ROLE) || credentials.getRole().equals(Credentials.DEFAULT_ROLE)){
-
+				
+				model.addAttribute("credentials",credentials);
 				model.addAttribute("currentUsername", currentUsername);
 				return "/cuoco/cuoco.html";			
 			}
@@ -102,7 +103,7 @@ public class CuocoController {
 	/*SOLO ADMIN PUO ELIMINARE GLI INGREDIENTI*/
 	@GetMapping("/deleteCuoco/{id}")
 	public String deleteIngrediente(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-		userRepository.deleteById(id);		
+		userService.deleteUser(id);		
 		redirectAttributes.addFlashAttribute("success", "Cuoco eliminato con successo!");
 		return "redirect:/cuochi";
 	}
@@ -123,11 +124,11 @@ public class CuocoController {
     		@Valid @ModelAttribute Credentials credentials,
     		BindingResult userBindingResult,
     		BindingResult credentialsBindingResult, 
-    		@RequestParam Map<String, String> requestParams, 
+    	//	@RequestParam Map<String, String> requestParams, 
     		RedirectAttributes redirectAttributes,
     		@RequestParam("file") MultipartFile image) throws IOException {
 
-    	this.userValidator.validate(user, credentialsBindingResult);
+    	this.userValidator.validate(user, userBindingResult);
     	this.credentialsValidator.validate(credentials,credentialsBindingResult);
 
     	if(!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
@@ -153,8 +154,51 @@ public class CuocoController {
     	return "admin/addCuochi";
     }
 
+    
+	 @GetMapping("/modificaCuoco/{id}")
+     public String modificaCuoco(@PathVariable("id") Long id, Model model) {
+		 
+		 UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		 Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		 model.addAttribute("credentials",credentials);
+		 User user=  this.userService.findById(id); //this.userRepository.findById(id).get();
+		 model.addAttribute("user",user);
+		 return "admin/modificaCuoco"; 
+	 }
 
+     
+     @PostMapping("/formModificaCuoco/{id}")
+     public String formModificaCuoco(@PathVariable("id") Long id,
+                                     @ModelAttribute("user") User nuovoUser,
+                                     @RequestParam("file") MultipartFile image,
+                                     BindingResult bindingResult,
+                                     Model model)  throws IOException{
+         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+         Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+         model.addAttribute("credentials", credentials);
+        
 
+         User user = this.userService.findById(id);// this.userRepository.findById(id).get();
+         user.setName(nuovoUser.getName());
+         user.setSurname(nuovoUser.getSurname());
+         LocalDate dataOriginal= user.getData();
+         user.setData(nuovoUser.getData());
+         LocalDate dataNew= user.getData();
+
+         if( dataNew==null) {
+        	 user.setData(dataOriginal);
+        	 
+         }
+         user.setEmail(nuovoUser.getEmail());
+         
+         if (!image.isEmpty()) {
+     		Image img = new Image(image.getBytes());
+     		this.imageRepository.save(img);
+     		user.setImage(img);
+         }
+
+         this.userService.saveUser(user);
+         return "redirect:/cuoco/{id}" ;
+     }
 }
-
 	

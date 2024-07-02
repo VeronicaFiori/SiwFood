@@ -14,15 +14,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Ingrediente;
-import it.uniroma3.siw.repository.IngredienteRepository;
 import it.uniroma3.siw.service.CredentialsService;
+import it.uniroma3.siw.service.IngredienteService;
 
 
 @Controller
 public class IngredientiController {
 
 	@Autowired
-	private IngredienteRepository ingredienteRepository;
+	private IngredienteService ingredienteService;
 
 	@Autowired
 	private CredentialsService credentialsService;
@@ -31,7 +31,7 @@ public class IngredientiController {
 
 	@GetMapping("/ingrediente/{id}")
 	public String getIngrediente(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("ingrediente", this.ingredienteRepository.findById(id).get());
+		model.addAttribute("ingrediente", this.ingredienteService.findById(id));
 		return "/cuoco/ingrediente.html";
 	}
 
@@ -40,7 +40,7 @@ public class IngredientiController {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 
-		model.addAttribute("ingrediente", this.ingredienteRepository.findAll());
+		model.addAttribute("ingrediente", this.ingredienteService.findAll());
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			return "/admin/ingredienti.html";
 		}
@@ -51,7 +51,7 @@ public class IngredientiController {
 	@GetMapping("/deleteIngrediente/{id}")
 	public String deleteIngrediente(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 
-		ingredienteRepository.deleteById(id);		
+		ingredienteService.deleteIngrediente(id);		
 		redirectAttributes.addFlashAttribute("success", "Ingrediente eliminato con successo!");
 		return "redirect:/ingredienti";
 	}
@@ -71,18 +71,18 @@ public class IngredientiController {
 		if (bindingResult.hasErrors()) {
 			return "cuoco/addIngredientiCuochi.html";
 		}
-		Ingrediente existingIngrediente = ingredienteRepository.findByNome(ingrediente.getNome());
+		Ingrediente existingIngrediente = ingredienteService.findByNome(ingrediente.getNome());
 
 		if (existingIngrediente != null) {
 			// Se esiste già nel database
 			redirectAttributes.addFlashAttribute("error", "L'ingrediente esiste già nel database.");
 			return "redirect:/addIngredienti";
 		} else {			
-			ingredienteRepository.save(ingrediente);
+			ingredienteService.save(ingrediente);
 			redirectAttributes.addFlashAttribute("success", "Ingrediente aggiunto con successo!");
 
 			model.addAttribute("ingrediente", new Ingrediente());
-			model.addAttribute("ingredienti", ingredienteRepository.findAll());
+			model.addAttribute("ingredienti", ingredienteService.findAll());
 			return "redirect:/ingredienti";
 		}
 	}

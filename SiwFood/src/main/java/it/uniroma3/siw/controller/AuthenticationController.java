@@ -80,8 +80,11 @@ public class AuthenticationController {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+			
 			return "admin/indexAdmin.html";
 		}
+		User user = credentials.getUser();
+        model.addAttribute("user", user);
 		return "cuoco/indexCuochi.html";
 	}
 

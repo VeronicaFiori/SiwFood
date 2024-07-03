@@ -27,7 +27,6 @@ public class RicetteService {
 		return ricetteRepository.findAll();
 	}
 	
-	@Transactional
 	public void save(Ricette ricette) {
 		ricetteRepository.save(ricette);
 	}

@@ -27,7 +27,7 @@ public class IngredienteService {
 	public List<Ingrediente> findAll() {
 		return ingredienteRepository.findAll();
 	}
-	@Transactional
+
 	public void save(Ingrediente ingrediente) {
 		ingredienteRepository.save(ingrediente);
 		
